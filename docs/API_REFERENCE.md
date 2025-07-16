@@ -464,7 +464,7 @@ result = await breaker.call(api_call_function, url, params)
 ### Parameter Service
 
 ```python
-from concrete.parameter_service import get_parameter_service
+from utils.parameter_service import get_parameter_service
 
 # Get parameter service
 param_service = get_parameter_service()
@@ -592,23 +592,25 @@ monitoring.add_health_check("database_connectivity", custom_database_health_chec
 ### Programmatic Configuration
 
 ```python
-from concrete.parameter_service import get_parameter_service
+from utils.parameter_service import get_parameter_service
+
 
 def setup_production_config():
     """Configure for production environment."""
     param_service = get_parameter_service()
-    
+
     # Set production parameters
     param_service.set_parameter("LOG_LEVEL", "WARNING")
     param_service.set_parameter("DEV_MODE", "false")
     param_service.set_parameter("STRUCTURED_LOGGING", "true")
     param_service.set_parameter("MCP_TIMEOUT", "300")
     param_service.set_parameter("MCP_RETRY_COUNT", "5")
-    
+
     # Load production secrets from secure source
     param_service.load_secrets_from_vault("production-vault")
-    
+
     return param_service
+
 
 # Use in application startup
 param_service = setup_production_config()

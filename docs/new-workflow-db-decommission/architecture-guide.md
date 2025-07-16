@@ -471,18 +471,19 @@ async def test_github_integration():
 ### 1. Credential Management
 
 ```python
-from concrete.parameter_service import get_parameter_service
+from utils.parameter_service import get_parameter_service
+
 
 class SecureCredentialManager:
     def __init__(self):
         self.param_service = get_parameter_service()
-    
+
     async def get_github_token(self):
         return await self.param_service.get_parameter(
             "GITHUB_PERSONAL_ACCESS_TOKEN",
             decrypt=True
         )
-    
+
     async def get_slack_token(self):
         return await self.param_service.get_parameter(
             "SLACK_BOT_TOKEN",

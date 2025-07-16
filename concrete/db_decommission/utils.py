@@ -13,7 +13,7 @@ from typing import Any, Dict, List, Optional
 from workflows.builder import WorkflowBuilder
 
 # Import parameter service
-from concrete.parameter_service import get_parameter_service
+from utils.parameter_service import get_parameter_service
 
 # Import new structured logging
 from graphmcp.logging import get_logger

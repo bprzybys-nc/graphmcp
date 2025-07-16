@@ -9,7 +9,7 @@ import time
 from typing import Any, Dict, List, Optional
 
 # Import components for validation
-from concrete.parameter_service import get_parameter_service
+from utils.parameter_service import get_parameter_service
 from utils.monitoring import get_monitoring_system
 
 # Import new structured logging

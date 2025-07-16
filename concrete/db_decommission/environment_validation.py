@@ -9,7 +9,7 @@ import asyncio
 from typing import Any, Dict, List
 
 # Import components for validation
-from concrete.parameter_service import get_parameter_service
+from utils.parameter_service import get_parameter_service
 from concrete.database_reference_extractor import DatabaseReferenceExtractor
 from concrete.file_decommission_processor import FileDecommissionProcessor
 from concrete.source_type_classifier import SourceTypeClassifier

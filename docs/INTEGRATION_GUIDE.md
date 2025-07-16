@@ -177,7 +177,7 @@ Create `mcp_config.json`:
 
 ```python
 from concrete.db_decommission import create_db_decommission_workflow
-from concrete.parameter_service import get_parameter_service
+from utils.parameter_service import get_parameter_service
 
 # Initialize workflow
 workflow = create_db_decommission_workflow()
