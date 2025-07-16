@@ -12,15 +12,13 @@ Tests the error handling system functionality including:
 """
 
 import pytest
-import asyncio
 import json
 from unittest.mock import patch, MagicMock, AsyncMock, call
-from datetime import datetime, timedelta
+from datetime import datetime
 from pathlib import Path
-import logging
 
 # Import the module under test
-from concrete.error_handling import (
+from utils.error_handling import (
     ErrorSeverity,
     ErrorCategory,
     ErrorContext,
@@ -29,8 +27,7 @@ from concrete.error_handling import (
     ErrorHandler,
     handle_errors,
     get_error_handler,
-    reset_error_handler,
-    logger as error_handling_logger # Import the module's logger
+    reset_error_handler  # Import the module's logger
 )
 
 # Use a custom logger name to avoid conflicts with other tests

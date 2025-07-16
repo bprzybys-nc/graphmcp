@@ -164,7 +164,7 @@ dashboard = monitoring.get_monitoring_dashboard()
 Comprehensive error handling and recovery.
 
 ```python
-from concrete.error_handling import get_error_handler, ErrorCategory, ErrorSeverity
+from utils.error_handling import get_error_handler, ErrorCategory, ErrorSeverity
 
 # Get error handler
 error_handler = get_error_handler()
@@ -402,33 +402,33 @@ await monitoring.send_alert(
 ### Error Categories
 
 ```python
-from concrete.error_handling import ErrorCategory
+from utils.error_handling import ErrorCategory
 
-ErrorCategory.NETWORK          # Network connectivity issues
-ErrorCategory.AUTHENTICATION   # API authentication failures
-ErrorCategory.CONFIGURATION    # Configuration errors
-ErrorCategory.RESOURCE         # System resource issues
-ErrorCategory.BUSINESS_LOGIC   # Application logic errors
-ErrorCategory.EXTERNAL_SERVICE # Third-party service failures
+ErrorCategory.NETWORK  # Network connectivity issues
+ErrorCategory.AUTHENTICATION  # API authentication failures
+ErrorCategory.CONFIGURATION  # Configuration errors
+ErrorCategory.RESOURCE  # System resource issues
+ErrorCategory.BUSINESS_LOGIC  # Application logic errors
+ErrorCategory.EXTERNAL_SERVICE  # Third-party service failures
 ErrorCategory.DATA_VALIDATION  # Data validation errors
-ErrorCategory.SYSTEM          # General system errors
+ErrorCategory.SYSTEM  # General system errors
 ```
 
 ### Error Severity Levels
 
 ```python
-from concrete.error_handling import ErrorSeverity
+from utils.error_handling import ErrorSeverity
 
-ErrorSeverity.LOW      # Informational errors
-ErrorSeverity.MEDIUM   # Standard errors
-ErrorSeverity.HIGH     # Important errors requiring attention
-ErrorSeverity.CRITICAL # Critical errors affecting workflow
+ErrorSeverity.LOW  # Informational errors
+ErrorSeverity.MEDIUM  # Standard errors
+ErrorSeverity.HIGH  # Important errors requiring attention
+ErrorSeverity.CRITICAL  # Critical errors affecting workflow
 ```
 
 ### Recovery Strategies
 
 ```python
-from concrete.error_handling import ErrorRecoveryStrategy
+from utils.error_handling import ErrorRecoveryStrategy
 
 # Create custom recovery strategy
 strategy = ErrorRecoveryStrategy(
@@ -446,7 +446,7 @@ result = await strategy.execute_with_recovery(
 ### Circuit Breaker
 
 ```python
-from concrete.error_handling import CircuitBreaker
+from utils.error_handling import CircuitBreaker
 
 # Create circuit breaker for external service
 breaker = CircuitBreaker(
@@ -503,17 +503,18 @@ param_service.set_secret("CUSTOM_API_KEY", "your-key")
 import asyncio
 from concrete.db_decommission import create_db_decommission_workflow
 from concrete.monitoring import get_monitoring_system
-from concrete.error_handling import get_error_handler
+from utils.error_handling import get_error_handler
+
 
 async def run_complete_workflow():
     # Initialize monitoring
     monitoring = get_monitoring_system()
     error_handler = get_error_handler()
-    
+
     try:
         # Create workflow
         workflow = create_db_decommission_workflow()
-        
+
         # Execute with full error handling
         result = await error_handler.execute_with_error_handling(
             workflow.execute,
@@ -524,7 +525,7 @@ async def run_complete_workflow():
             ],
             slack_channel="#database-migration"
         )
-        
+
         # Log success
         await monitoring.send_alert(
             AlertSeverity.INFO,
@@ -532,9 +533,9 @@ async def run_complete_workflow():
             f"Database decommissioning completed successfully",
             result.to_dict()
         )
-        
+
         return result
-        
+
     except Exception as e:
         # Handle workflow failure
         await error_handler.handle_error(
@@ -544,6 +545,7 @@ async def run_complete_workflow():
             database_name="legacy_database"
         )
         raise
+
 
 # Run the workflow
 result = asyncio.run(run_complete_workflow())
