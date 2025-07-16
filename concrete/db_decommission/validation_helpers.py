@@ -13,8 +13,8 @@ from utils.parameter_service import get_parameter_service
 from utils.monitoring import get_monitoring_system
 
 # Import new structured logging
-from graphmcp.logging import get_logger
-from graphmcp.logging.config import LoggingConfig
+from graphmcp_logging import get_logger
+from graphmcp_logging import LoggingConfig
 
 # Import data models
 from .data_models import ValidationResult

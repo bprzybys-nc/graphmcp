@@ -35,6 +35,26 @@ from .data_models import (
     MCPToolCall,
 )
 
+# Extracted utilities from concrete implementations
+from .parameter_service import get_parameter_service, ParameterService
+from .monitoring import get_monitoring_system, MonitoringSystem
+from .progress_tracker import ProgressFrame, WorkflowProgress, ProgressTracker, create_progress_tracker
+from .performance_optimization import (
+    CacheStrategy,
+    CacheEntry,
+    PerformanceMetrics,
+    AsyncCache,
+    ConnectionPool,
+    ParallelProcessor,
+    PerformanceManager,
+    get_performance_manager,
+    cleanup_performance_manager,
+    cached,
+    timed,
+    rate_limited,
+)
+from .error_handling import get_error_handler, ErrorHandler
+
 __all__ = [
     # Configuration
     "MCPConfigManager",
@@ -65,4 +85,28 @@ __all__ = [
     "MCPSession",
     "MCPServerConfig",
     "MCPConfigStatus",
+    
+    # Extracted utilities
+    "get_parameter_service",
+    "ParameterService",
+    "get_monitoring_system", 
+    "MonitoringSystem",
+    "ProgressFrame",
+    "WorkflowProgress",
+    "ProgressTracker",
+    "create_progress_tracker",
+    "CacheStrategy",
+    "CacheEntry",
+    "PerformanceMetrics",
+    "AsyncCache",
+    "ConnectionPool",
+    "ParallelProcessor",
+    "PerformanceManager",
+    "get_performance_manager",
+    "cleanup_performance_manager",
+    "cached",
+    "timed",
+    "rate_limited",
+    "get_error_handler",
+    "ErrorHandler",
 ]

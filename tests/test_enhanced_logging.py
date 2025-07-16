@@ -7,14 +7,11 @@ and enhanced progress visualization features.
 
 import pytest
 import json
-import time
 from unittest.mock import Mock, patch
 from io import StringIO
 
-from graphmcp.logging import get_logger
-from graphmcp.logging.config import LoggingConfig
-from graphmcp.logging.structured_logger import StructuredLogger
-from graphmcp.logging.workflow_logger import WorkflowLogger
+from graphmcp_logging import get_logger
+from graphmcp_logging import LoggingConfig
 
 
 class TestEnhancedConsoleFormatter:

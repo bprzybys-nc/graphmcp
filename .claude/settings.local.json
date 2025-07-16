@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__filesystem__list_directory",
+      "mcp__filesystem__read_file",
+      "mcp__filesystem__search_files",
+      "Bash(python:*)",
+      "Bash(ls:*)",
+      "Bash(git mv:*)",
+      "Bash(find:*)"
+    ],
+    "deny": []
+  }
+}

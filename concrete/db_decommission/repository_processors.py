@@ -18,8 +18,8 @@ from concrete.source_type_classifier import SourceTypeClassifier
 from concrete.performance_optimization import get_performance_manager
 
 # Import new structured logging
-from graphmcp.logging import get_logger
-from graphmcp.logging.config import LoggingConfig
+from graphmcp_logging import get_logger
+from graphmcp_logging import LoggingConfig
 
 # Import data models
 
@@ -29,7 +29,6 @@ from .client_helpers import (
     initialize_slack_client,
     initialize_repomix_client,
     send_slack_notification_with_retry,
-    safe_slack_notification,
     extract_repo_details
 )
 

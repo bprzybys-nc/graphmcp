@@ -11,8 +11,8 @@ import sys
 import os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__)))
 
-from graphmcp.logging import get_logger
-from graphmcp.logging.config import LoggingConfig
+from graphmcp_logging import get_logger
+from graphmcp_logging import LoggingConfig
 
 
 def demo_enhanced_logging():

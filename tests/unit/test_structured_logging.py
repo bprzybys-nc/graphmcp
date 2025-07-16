@@ -7,13 +7,11 @@ following Claude Code patterns.
 
 import json
 import tempfile
-import time
 import pytest
 from io import StringIO
-from unittest.mock import patch, MagicMock
-from pathlib import Path
+from unittest.mock import patch
 
-from graphmcp.logging import (
+from graphmcp_logging import (
     StructuredLogger, 
     LogEntry, 
     StructuredData, 

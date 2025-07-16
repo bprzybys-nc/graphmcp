@@ -56,8 +56,8 @@ async def main():
     print("-" * 80)
     
     # Initialize logger for workflow visualization
-    from graphmcp.logging import get_logger
-    from graphmcp.logging.config import LoggingConfig
+    from graphmcp_logging import get_logger
+    from graphmcp_logging import LoggingConfig
     
     config = LoggingConfig.from_env()
     logger = get_logger(f"db_decommission_{args.database}", config)

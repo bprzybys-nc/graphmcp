@@ -114,10 +114,11 @@ workflow_logger = WorkflowLoggerAdapter(logger, {"workflow_id": workflow_id})
 ```
 
 #### New Structured Logger Pattern
+
 ```python
 # From graphmcp/logging/__init__.py
-from graphmcp.logging import get_logger
-from graphmcp.logging.config import LoggingConfig
+from logging import get_logger
+from logging import LoggingConfig
 
 # Correct factory function usage
 config = LoggingConfig.from_env()

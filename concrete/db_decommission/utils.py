@@ -16,8 +16,8 @@ from workflows.builder import WorkflowBuilder
 from utils.parameter_service import get_parameter_service
 
 # Import new structured logging
-from graphmcp.logging import get_logger
-from graphmcp.logging.config import LoggingConfig
+from graphmcp_logging import get_logger
+from graphmcp_logging import LoggingConfig
 
 # Import workflow steps
 from .workflow_steps import (

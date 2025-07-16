@@ -14,6 +14,9 @@ GraphMCP provides a unified interface for managing and coordinating multiple MCP
 - **Live Streaming**: Real-time workflow visualization with Streamlit UI
 - **Async Support**: Full asynchronous operation for high performance
 - **Error Handling**: Comprehensive error handling and retry mechanisms
+- **Performance Optimization**: Caching, connection pooling, and parallel processing
+- **Progress Tracking**: Real-time progress monitoring with bandwidth tracking
+- **Parameter Management**: Centralized configuration and environment variable handling
 - **Testing Framework**: Extensive unit, integration, and E2E testing
 
 ## MCP Clients
@@ -113,13 +116,19 @@ GraphMCP Framework
 │       ├── server.py       # Workflow server
 │       ├── context.py      # Workflow context management
 │       └── logging.py      # Structured logging
-├── concrete/               # Concrete implementations
-│   ├── file_decommission_processor.py  # Database decommissioning
+├── concrete/               # Concrete workflow implementations
+│   ├── db_decommission/    # Database decommissioning workflow
 │   ├── preview_ui/         # Streamlit UI for live streaming
 │   └── demo.sh            # Demo script
-├── workflows/              # Workflow definitions
+├── workflows/              # Generic workflow framework
 ├── tests/                  # Test suites
-└── utils/                  # Utilities and helpers
+├── utils/                  # Reusable utilities
+│   ├── parameter_service.py    # Configuration management
+│   ├── monitoring.py           # System monitoring
+│   ├── progress_tracker.py     # Progress tracking
+│   ├── error_handling.py       # Error handling system
+│   └── performance_optimization.py  # Caching and performance
+└── graphmcp_logging/       # Structured logging system
 ```
 
 ## Development

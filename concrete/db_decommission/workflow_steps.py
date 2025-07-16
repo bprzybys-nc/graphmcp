@@ -12,8 +12,8 @@ from typing import Any, Dict, Optional
 from concrete.file_decommission_processor import FileDecommissionProcessor
 
 # Import new structured logging
-from graphmcp.logging import get_logger
-from graphmcp.logging.config import LoggingConfig
+from graphmcp_logging import get_logger
+from graphmcp_logging import LoggingConfig
 
 # Import extracted helper modules
 from .validation_checks import (

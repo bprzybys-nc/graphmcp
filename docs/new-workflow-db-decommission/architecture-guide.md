@@ -50,8 +50,8 @@ async def process_repositories_step(
 Comprehensive logging with both JSON and console output:
 
 ```python
-from graphmcp.logging import get_logger
-from graphmcp.logging.config import LoggingConfig
+from logging import get_logger
+from logging import LoggingConfig
 
 # Initialize structured logger
 config = LoggingConfig.from_env()

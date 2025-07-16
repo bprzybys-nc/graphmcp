@@ -15,8 +15,8 @@ from collections import defaultdict
 from concrete.source_type_classifier import SourceType, SourceTypeClassifier
 
 # Import new structured logging
-from graphmcp.logging import get_logger
-from graphmcp.logging.config import LoggingConfig
+from graphmcp_logging import get_logger
+from graphmcp_logging import LoggingConfig
 
 # Import data models
 from .data_models import FileProcessingResult
