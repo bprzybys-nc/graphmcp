@@ -223,6 +223,9 @@ class WorkflowLogger:
             clients_validated: Number of MCP clients validated
             validation_time: Time taken for validation in seconds
         """
+        # Add section separator
+        self.structured_logger.log_section_separator("Environment Validation & Setup")
+        
         # Clean console summary
         self.info(f"Environment validated: {total_params} parameters, {secrets_count} secrets, "
                  f"{clients_validated} clients ({validation_time:.1f}s)")
@@ -318,6 +321,9 @@ class WorkflowLogger:
         Args:
             qa_results: List of QA check results
         """
+        # Add section separator
+        self.structured_logger.log_section_separator("Quality Assurance & Validation")
+        
         if not qa_results:
             self.info("⚠️  Quality Assurance: No checks performed")
             return
@@ -381,6 +387,9 @@ class WorkflowLogger:
     def log_file_discovery(self, files: List[str], repo: str, 
                           pattern_matches: Optional[Dict] = None) -> None:
         """Log file discovery with structured table data."""
+        # Add section separator for repository processing
+        self.structured_logger.log_section_separator("Repository Processing with Pattern Discovery")
+        
         self.info(f"Discovered {len(files)} files in repository: {repo}")
         
         # Create structured table
@@ -472,6 +481,9 @@ class WorkflowLogger:
     
     def print_refactoring_groups(self, groups: List[Dict], title: str = "Refactoring Groups") -> None:
         """Print refactoring groups table."""
+        # Add section separator for refactoring operations
+        self.structured_logger.log_section_separator("Apply Contextual Refactoring Rules")
+        
         if not groups:
             self.info(f"{title}: No groups found")
             return
@@ -525,6 +537,9 @@ class WorkflowLogger:
             changes: List of change dictionaries with 'file_path' and 'diff' keys
             title: Title for the changes summary
         """
+        # Add section separator for GitHub PR creation
+        self.structured_logger.log_section_separator("Create GitHub Pull Request")
+        
         self.info(f"📋 {title}")
         
         for change in changes:
@@ -554,6 +569,9 @@ class WorkflowLogger:
     
     def log_workflow_summary(self) -> None:
         """Log final workflow summary."""
+        # Add section separator
+        self.structured_logger.log_section_separator("Workflow Summary & Metrics")
+        
         self.metrics["end_time"] = time.time()
         duration = self.metrics["end_time"] - self.metrics["start_time"]
         
