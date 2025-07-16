@@ -12,6 +12,170 @@ from io import StringIO
 
 from graphmcp_logging import get_logger
 from graphmcp_logging import LoggingConfig
+from graphmcp_logging.structured_logger import obfuscate_token, sanitize_message_for_console
+
+
+class TestTokenObfuscation:
+    """Test token obfuscation functionality for security."""
+    
+    def test_obfuscate_token_basic(self):
+        """Test basic token obfuscation functionality."""
+        token = "abc123def456ghi789jkl012mno345pqr678stu901vwx"
+        obfuscated = obfuscate_token(token)
+        
+        assert len(obfuscated) == len(token)
+        assert obfuscated.startswith("abc1")
+        assert obfuscated.endswith("901vwx")
+        assert "*" in obfuscated
+    
+    def test_obfuscate_short_token(self):
+        """Test obfuscation of short tokens."""
+        token = "abc123"
+        obfuscated = obfuscate_token(token)
+        
+        assert obfuscated == "******"
+        assert len(obfuscated) == len(token)
+    
+    def test_obfuscate_empty_token(self):
+        """Test obfuscation of empty token."""
+        obfuscated = obfuscate_token("")
+        assert obfuscated == ""
+    
+    def test_obfuscate_custom_show_chars(self):
+        """Test obfuscation with custom show_chars parameter."""
+        token = "randomtoken123456789012345678901234567890"
+        obfuscated = obfuscate_token(token, show_chars=6)
+        
+        assert len(obfuscated) == len(token)
+        assert obfuscated.startswith("random")
+        assert obfuscated.endswith("567890")
+        assert "*" in obfuscated
+    
+    def test_sanitize_message_with_token(self):
+        """Test message sanitization with token."""
+        message = "🔍 DEBUG token for 'test': TOKEN='abc123def456ghi789jkl012mno345pqr678stu' (length: 40)"
+        sanitized = sanitize_message_for_console(message, "INFO")
+        
+        assert "abc1****8stu" in sanitized
+        assert "abc123def456ghi789jkl012mno345pqr678stu" not in sanitized
+    
+    def test_sanitize_message_debug_level_preserves_token(self):
+        """Test that DEBUG level preserves full token."""
+        message = "🔍 DEBUG token for 'test': TOKEN='xyz789abc123def456ghi789jkl012mno345pqr' (length: 40)"
+        sanitized = sanitize_message_for_console(message, "DEBUG")
+        
+        assert "xyz789abc123def456ghi789jkl012mno345pqr" in sanitized
+        assert "xyz7****5pqr" not in sanitized
+    
+    def test_sanitize_message_multiple_tokens(self):
+        """Test sanitization with multiple tokens."""
+        message = "Token1: abc123def456ghi789jkl012mno345pqr678stu and Token2: xyz789abc123def456ghi789jkl012mno345pqr678stu901vwx"
+        sanitized = sanitize_message_for_console(message, "INFO")
+        
+        assert "abc1****8stu" in sanitized
+        assert "xyz7****1vwx" in sanitized
+        assert "abc123def456ghi789jkl012mno345pqr678stu" not in sanitized
+        assert "xyz789abc123def456ghi789jkl012mno345pqr678stu901vwx" not in sanitized
+
+
+class TestLogStepFunctionality:
+    """Test the new log_step function."""
+    
+    def test_log_step_start(self):
+        """Test log_step with start status."""
+        config = LoggingConfig.for_development()
+        logger = get_logger("test_log_step", config)
+        
+        with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
+            logger.structured_logger.log_step(
+                step_name="quality_assurance",
+                status="start",
+                description="Perform comprehensive quality assurance checks",
+                data={"database_name": "postgres_air"}
+            )
+            
+        output = mock_stdout.getvalue()
+        
+        assert "🔄 Starting step: quality_assurance" in output
+        assert "Perform comprehensive quality assurance checks" in output
+        assert "database_name" in output
+    
+    def test_log_step_complete_with_duration(self):
+        """Test log_step with complete status and duration."""
+        config = LoggingConfig.for_development()
+        logger = get_logger("test_log_step_complete", config)
+        
+        with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
+            logger.structured_logger.log_step(
+                step_name="apply_refactoring",
+                status="complete",
+                description="Applied refactoring to 13 files",
+                data={"files_processed": 13, "success": True},
+                duration_ms=1234.5
+            )
+            
+        output = mock_stdout.getvalue()
+        
+        assert "└─ ✅ Completed step: apply_refactoring" in output
+        assert "Applied refactoring to 13 files" in output
+        assert "(1234.5ms)" in output
+    
+    def test_log_step_error(self):
+        """Test log_step with error status."""
+        config = LoggingConfig.for_development()
+        logger = get_logger("test_log_step_error", config)
+        
+        with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
+            logger.structured_logger.log_step(
+                step_name="create_github_pr",
+                status="error",
+                description="Failed to create pull request",
+                data={"error": "API rate limit exceeded"}
+            )
+            
+        output = mock_stdout.getvalue()
+        
+        assert "└─ ❌ Error in step: create_github_pr" in output
+        assert "Failed to create pull request" in output
+        assert "API rate limit exceeded" in output
+    
+    def test_log_step_progress(self):
+        """Test log_step with progress status."""
+        config = LoggingConfig.for_development()
+        logger = get_logger("test_log_step_progress", config)
+        
+        with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
+            logger.structured_logger.log_step(
+                step_name="file_processing",
+                status="progress",
+                description="Processing file 5 of 10",
+                data={"current": 5, "total": 10}
+            )
+            
+        output = mock_stdout.getvalue()
+        
+        assert "├─ file_processing" in output
+        assert "Processing file 5 of 10" in output
+    
+    def test_workflow_logger_log_step_integration(self):
+        """Test WorkflowLogger log_step integration."""
+        config = LoggingConfig.for_development()
+        logger = get_logger("test_workflow_log_step", config)
+        
+        with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
+            logger.log_step(
+                step_name="pattern_discovery",
+                status="complete",
+                description="Discovered 8 patterns in 13 files",
+                data={"patterns_found": 8, "files_analyzed": 13},
+                duration_ms=567.8
+            )
+            
+        output = mock_stdout.getvalue()
+        
+        assert "└─ ✅ Completed step: pattern_discovery" in output
+        assert "Discovered 8 patterns in 13 files" in output
+        assert "(567.8ms)" in output
 
 
 class TestEnhancedConsoleFormatter:
