@@ -13,7 +13,7 @@ import json
 from unittest.mock import AsyncMock
 from pathlib import Path
 
-from concrete.progress_tracker import (
+from utils.progress_tracker import (
     ProgressTracker,
     ProgressFrame,
     WorkflowProgress,

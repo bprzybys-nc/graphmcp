@@ -11,7 +11,8 @@ from dataclasses import dataclass, field
 from typing import Dict, List, Any, Optional
 from pathlib import Path
 
-from concrete.performance_optimization import AsyncCache, CacheStrategy
+from concrete.performance_optimization import AsyncCache
+from utils.performance_optimization import CacheStrategy
 
 logger = logging.getLogger(__name__)
 

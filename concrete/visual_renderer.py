@@ -14,7 +14,7 @@ from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
 
-from concrete.progress_tracker import ProgressFrame, WorkflowProgress
+from utils.progress_tracker import ProgressFrame, WorkflowProgress
 
 logger = logging.getLogger(__name__)
 

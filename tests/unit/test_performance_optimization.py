@@ -23,7 +23,7 @@ import pickle
 
 # Import the module and components under test
 from concrete.performance_optimization import (
-    AsyncCache, CacheStrategy, CacheEntry,
+    AsyncCache, CacheEntry,
     ConnectionPool,
     ParallelProcessor,
     PerformanceManager,
@@ -33,6 +33,8 @@ from concrete.performance_optimization import (
     get_performance_manager,
     cleanup_performance_manager
 )
+from utils.performance_optimization import CacheStrategy
+
 
 # --- Test Fixtures ---
 

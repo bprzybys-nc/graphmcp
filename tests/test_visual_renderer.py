@@ -19,7 +19,7 @@ from concrete.visual_renderer import (
     RenderConfig,
     create_visual_renderer
 )
-from concrete.progress_tracker import ProgressFrame, WorkflowProgress
+from utils.progress_tracker import ProgressFrame, WorkflowProgress
 
 # Test markers
 pytestmark = [

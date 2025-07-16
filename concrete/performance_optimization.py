@@ -8,30 +8,24 @@ and other performance enhancements for production-scale database decommissioning
 import asyncio
 import time
 import hashlib
-import json
 import pickle
 import os
-from typing import Dict, List, Any, Optional, Callable, Union, TypeVar, Generic
+from typing import Dict, List, Any, Optional, Callable, TypeVar, Generic
 from dataclasses import dataclass, asdict
 from datetime import datetime, timedelta
 from pathlib import Path
-from functools import wraps, lru_cache
+from functools import wraps
 from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor
 import aiohttp
 import aiofiles
 import logging
-from enum import Enum
+
+from utils.performance_optimization import CacheStrategy
 
 logger = logging.getLogger(__name__)
 
 T = TypeVar('T')
 
-class CacheStrategy(Enum):
-    """Cache strategy options."""
-    MEMORY = "memory"
-    DISK = "disk"
-    REDIS = "redis"
-    HYBRID = "hybrid"
 
 @dataclass
 class CacheEntry(Generic[T]):
@@ -73,7 +67,7 @@ class PerformanceMetrics:
 class AsyncCache:
     """High-performance async cache with multiple storage backends."""
     
-    def __init__(self, 
+    def __init__(self,
                  strategy: CacheStrategy = CacheStrategy.MEMORY,
                  max_size: int = 1000,
                  default_ttl: int = 3600,
@@ -458,9 +452,9 @@ class ParallelProcessor:
         self.executor.shutdown(wait=True)
 
 # Performance optimization decorators
-def cached(ttl: int = 3600, 
-          strategy: CacheStrategy = CacheStrategy.MEMORY,
-          key_func: Optional[Callable] = None):
+def cached(ttl: int = 3600,
+           strategy: CacheStrategy = CacheStrategy.MEMORY,
+           key_func: Optional[Callable] = None):
     """Decorator for caching function results."""
     def decorator(func):
         cache = AsyncCache(strategy=strategy, default_ttl=ttl)
