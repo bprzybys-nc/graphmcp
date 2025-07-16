@@ -136,7 +136,7 @@ logger.export_logs("path/to/export.json")
 Production monitoring and health checks.
 
 ```python
-from concrete.monitoring import get_monitoring_system
+from utils.monitoring import get_monitoring_system
 
 # Get monitoring instance
 monitoring = get_monitoring_system()
@@ -352,7 +352,7 @@ async def check_log_files() -> HealthCheckResult:
 ### Metrics Collection
 
 ```python
-from concrete.monitoring import SystemMetrics
+from utils.monitoring import SystemMetrics
 
 # Collect system metrics
 metrics = monitoring.collect_system_metrics()
@@ -366,7 +366,7 @@ print(f"Network connections: {metrics.network_connections}")
 ### Alert System
 
 ```python
-from concrete.monitoring import AlertSeverity
+from utils.monitoring import AlertSeverity
 
 # Send different severity alerts
 await monitoring.send_alert(
@@ -502,7 +502,7 @@ param_service.set_secret("CUSTOM_API_KEY", "your-key")
 ```python
 import asyncio
 from concrete.db_decommission import create_db_decommission_workflow
-from concrete.monitoring import get_monitoring_system
+from utils.monitoring import get_monitoring_system
 from utils.error_handling import get_error_handler
 
 
@@ -555,7 +555,8 @@ print(f"Workflow completed: {result.success}")
 ### Custom Health Check Integration
 
 ```python
-from concrete.monitoring import get_monitoring_system, HealthCheckResult, HealthStatus
+from utils.monitoring import get_monitoring_system, HealthCheckResult, HealthStatus
+
 
 async def custom_database_health_check():
     """Custom health check for database connectivity."""
@@ -563,7 +564,7 @@ async def custom_database_health_check():
         # Your database connection logic
         connection = connect_to_database()
         result = connection.execute("SELECT 1")
-        
+
         return HealthCheckResult(
             name="database_connectivity",
             status=HealthStatus.HEALTHY,
@@ -581,6 +582,7 @@ async def custom_database_health_check():
             timestamp=datetime.utcnow(),
             metadata={"error": str(e)}
         )
+
 
 # Register custom health check
 monitoring = get_monitoring_system()

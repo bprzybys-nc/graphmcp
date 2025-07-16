@@ -13,7 +13,7 @@ from concrete.parameter_service import get_parameter_service
 from concrete.database_reference_extractor import DatabaseReferenceExtractor
 from concrete.file_decommission_processor import FileDecommissionProcessor
 from concrete.source_type_classifier import SourceTypeClassifier
-from concrete.monitoring import get_monitoring_system, HealthStatus
+from utils.monitoring import get_monitoring_system, HealthStatus
 
 # Import new structured logging
 

@@ -460,10 +460,11 @@ start_http_server(8000)
 ### Custom Health Checks
 
 ```python
-from concrete.monitoring import get_monitoring_system
+from utils.monitoring import get_monitoring_system
 
 # Add custom health check
 monitoring = get_monitoring_system()
+
 
 @monitoring.add_health_check("database_connectivity")
 async def check_database():
@@ -497,7 +498,7 @@ curl -X POST -H 'Authorization: Bearer your_slack_token' \
 
 ```python
 # Monitor memory usage
-from concrete.monitoring import get_monitoring_system
+from utils.monitoring import get_monitoring_system
 
 monitoring = get_monitoring_system()
 health = await monitoring.perform_health_check("memory_usage")

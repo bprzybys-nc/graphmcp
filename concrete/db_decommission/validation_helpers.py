@@ -10,7 +10,7 @@ from typing import Any, Dict, List, Optional
 
 # Import components for validation
 from concrete.parameter_service import get_parameter_service
-from concrete.monitoring import get_monitoring_system
+from utils.monitoring import get_monitoring_system
 
 # Import new structured logging
 from graphmcp.logging import get_logger

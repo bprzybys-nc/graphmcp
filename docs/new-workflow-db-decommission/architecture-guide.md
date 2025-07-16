@@ -517,19 +517,20 @@ class RepositoryInput(BaseModel):
 ### 1. Metrics Collection
 
 ```python
-from concrete.monitoring import get_monitoring_system
+from utils.monitoring import get_monitoring_system
+
 
 class WorkflowMetrics:
     def __init__(self):
         self.monitoring = get_monitoring_system()
-    
+
     async def record_step_duration(self, step_name: str, duration: float):
         await self.monitoring.record_metric(
             "workflow_step_duration",
             duration,
             tags={"step_name": step_name}
         )
-    
+
     async def record_file_processing_rate(self, files_per_second: float):
         await self.monitoring.record_metric(
             "file_processing_rate",

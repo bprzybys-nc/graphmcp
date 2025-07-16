@@ -353,16 +353,18 @@ The application exposes health checks via the monitoring system:
 ```python
 # Health check script
 import asyncio
-from concrete.monitoring import get_monitoring_system
+from utils.monitoring import get_monitoring_system
+
 
 async def health_check():
     monitoring = get_monitoring_system()
     results = await monitoring.perform_health_check()
-    
+
     for name, result in results.items():
         print(f"{name}: {result.status.value} - {result.message}")
-    
+
     return all(r.status.value in ['healthy', 'warning'] for r in results.values())
+
 
 if __name__ == "__main__":
     success = asyncio.run(health_check())
@@ -612,21 +614,23 @@ export PYTHONHASHSEED=random
 ```python
 # Performance monitoring
 import asyncio
-from concrete.monitoring import get_monitoring_system
+from utils.monitoring import get_monitoring_system
+
 
 async def performance_check():
     monitoring = get_monitoring_system()
     metrics = monitoring.collect_system_metrics()
-    
+
     print(f"CPU Usage: {metrics.cpu_percent}%")
     print(f"Memory Usage: {metrics.memory_percent}%")
     print(f"Network Connections: {metrics.network_connections}")
-    
+
     if metrics.cpu_percent > 80:
         print("⚠️ High CPU usage detected")
-    
+
     if metrics.memory_percent > 80:
         print("⚠️ High memory usage detected")
+
 
 asyncio.run(performance_check())
 ```
@@ -636,7 +640,7 @@ asyncio.run(performance_check())
 Access the monitoring dashboard programmatically:
 
 ```python
-from concrete.monitoring import get_monitoring_system
+from utils.monitoring import get_monitoring_system
 
 monitoring = get_monitoring_system()
 dashboard = monitoring.get_monitoring_dashboard()
