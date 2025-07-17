@@ -10,7 +10,7 @@ import time
 from typing import Any, Dict, List, Optional
 
 # Import workflow components
-from workflows.builder import WorkflowBuilder
+from workflows.builder import WorkflowBuilder, Workflow
 
 # Import parameter service
 from utils.parameter_service import get_parameter_service
@@ -88,15 +88,15 @@ def create_db_decommission_workflow(
         description=f"Decommissioning of {database_name} database with pattern discovery, contextual rules, and comprehensive logging"
     )
     
-    .custom_step(
+    .step(
         "validate_environment", "Environment Validation & Setup",
-        validate_environment_step,
+        lambda context, step, **params: validate_environment_step(context, step, **params),
         parameters={"database_name": database_name, "workflow_id": workflow_id},
         timeout_seconds=30
     )
-    .custom_step(
+    .step(
         "process_repositories", "Repository Processing with Pattern Discovery",
-        process_repositories_step,
+        lambda context, step, **params: process_repositories_step(context, step, **params),
         parameters={
             "target_repos": target_repos,
             "database_name": database_name,
@@ -106,9 +106,9 @@ def create_db_decommission_workflow(
         depends_on=["validate_environment"],
         timeout_seconds=600
     )
-    .custom_step(
+    .step(
         "apply_refactoring", "Apply Contextual Refactoring Rules",
-        apply_refactoring_step,
+        lambda context, step, **params: apply_refactoring_step(context, step, **params),
         parameters={
             "database_name": database_name,
             "repo_owner": repo_owner,
@@ -118,9 +118,9 @@ def create_db_decommission_workflow(
         depends_on=["process_repositories"],
         timeout_seconds=300
     )
-    .custom_step(
+    .step(
         "create_github_pr", "Create GitHub Pull Request",
-        create_github_pr_step,
+        lambda context, step, **params: create_github_pr_step(context, step, **params),
         parameters={
             "database_name": database_name,
             "repo_owner": repo_owner,
@@ -130,9 +130,9 @@ def create_db_decommission_workflow(
         depends_on=["apply_refactoring"],
         timeout_seconds=180
     )
-    .custom_step(
+    .step(
         "quality_assurance", "Quality Assurance & Validation",
-        quality_assurance_step,
+        lambda context, step, **params: quality_assurance_step(context, step, **params),
         parameters={
             "database_name": database_name,
             "repo_owner": repo_owner,
@@ -142,9 +142,9 @@ def create_db_decommission_workflow(
         depends_on=["create_github_pr"],
         timeout_seconds=60
     )
-    .custom_step(
+    .step(
         "workflow_summary", "Workflow Summary & Metrics",
-        workflow_summary_step,
+        lambda context, step, **params: workflow_summary_step(context, step, **params),
         parameters={"database_name": database_name, "workflow_id": workflow_id},
         depends_on=["quality_assurance"],
         timeout_seconds=30

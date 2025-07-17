@@ -221,10 +221,10 @@ class TestWorkflowIntegration:
                     "https://github.com/bprzybys-nc/postgres-sample-dbs",
                     depends_on=["pack_repo"]
                 )
-                .custom_step(
+                .step(
                     "validate_repo", 
                     "Validate Repository Access",
-                    validate_repository_step,
+                    lambda context, step, **params: validate_repository_step(context, step, **params),
                     parameters={"repo_url": "https://github.com/bprzybys-nc/postgres-sample-dbs"},
                     depends_on=[]
                 )
@@ -308,10 +308,10 @@ class TestWorkflowIntegration:
                                   description="Test error recovery mechanisms")
             .repomix_pack_repo("pack_primary", "https://github.com/test/repo")
             .github_analyze_repo("analyze_fallback", "https://github.com/test/repo")
-            .custom_step(
+            .step(
                 "merge_results", 
                 "Merge Analysis Results",
-                merge_analysis_results,
+                lambda context, step, **params: merge_analysis_results(context, step, **params),
                 depends_on=["pack_primary", "analyze_fallback"]
             )
             .slack_post(
@@ -372,10 +372,10 @@ class TestWorkflowIntegration:
             .repomix_pack_repo("pack_repo2", "https://github.com/test/repo2")
             .github_analyze_repo("analyze_repo1", "https://github.com/test/repo1")
             .github_analyze_repo("analyze_repo2", "https://github.com/test/repo2")
-            .custom_step(
+            .step(
                 "consolidate_results",
                 "Consolidate All Results",
-                self._consolidate_results_step,
+                lambda context, step, **params: self._consolidate_results_step(context, step, **params),
                 depends_on=["pack_repo1", "pack_repo2", "analyze_repo1", "analyze_repo2"]
             )
             .with_config(max_parallel_steps=4)
@@ -435,13 +435,13 @@ class TestWorkflowIntegration:
         
         workflow = (WorkflowBuilder("context-sharing", real_config_path,
                                   description="Test workflow context sharing mechanisms")
-            .custom_step("producer", "Data Producer Step", context_producer_step)
-            .custom_step("consumer", "Data Consumer Step", context_consumer_step, depends_on=["producer"])
+            .step("producer", "Data Producer Step", lambda context, step, **params: context_producer_step(context, step, **params))
+            .step("consumer", "Data Consumer Step", lambda context, step, **params: context_consumer_step(context, step, **params), depends_on=["producer"])
             .repomix_pack_repo("pack_repo", "https://github.com/test/repo", depends_on=["consumer"])
-            .custom_step(
+            .step(
                 "final_processor",
                 "Final Processing Step",
-                self._final_processor_step,
+                lambda context, step, **params: self._final_processor_step(context, step, **params),
                 depends_on=["pack_repo"]
             )
             .build()

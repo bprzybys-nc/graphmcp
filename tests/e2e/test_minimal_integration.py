@@ -54,7 +54,7 @@ class TestMinimalIntegration:
             
             # Create minimal GitHub workflow
             workflow = (WorkflowBuilder("github-test", "clients/mcp_config.json")
-                .custom_step("validate", "Simple Validation", validate_result)
+                .step("validate", "Simple Validation", lambda context, step, **params: validate_result(context, step, **params))
                 .build()
             )
             

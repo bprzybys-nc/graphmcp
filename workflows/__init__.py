@@ -1,7 +1,7 @@
 """
 GraphMCP Workflows Package
 """
-from .builder import WorkflowBuilder, Workflow, WorkflowStep, WorkflowResult, WorkflowConfig, StepType
+from .builder import WorkflowBuilder, Workflow, WorkflowStep, WorkflowResult, WorkflowConfig, StepType, WorkflowContext
 
 __all__ = [
     "WorkflowBuilder",
@@ -10,4 +10,5 @@ __all__ = [
     "WorkflowResult",
     "WorkflowConfig",
     "StepType",
+    "WorkflowContext",
 ] 

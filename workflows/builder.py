@@ -6,11 +6,12 @@ that leverage multiple MCP servers.
 """
 
 from __future__ import annotations
+
 import logging
 import time
-from enum import Enum, auto
-from typing import Any, Callable, Dict, List, Optional, Union
 from dataclasses import dataclass, field
+from enum import Enum, auto
+from typing import Any, Callable, Union
 
 from utils import ensure_serializable
 
@@ -39,16 +40,27 @@ class WorkflowStep:
     server_name: Optional[str] = None
     tool_name: Optional[str] = None
     custom_function: Optional[Callable] = None
-    
+
     # Add serialization helper for functions
     function: Optional[Callable] = field(default=None, repr=False)
-    
+
+    # NEW: Add delegate field for step() method
+    delegate: Optional[Callable] = field(default=None, repr=False)
+
     def __post_init__(self):
-        # Alias for backward compatibility
+        # PRESERVE: Existing compatibility logic
         if self.custom_function and not self.function:
             self.function = self.custom_function
         elif self.function and not self.custom_function:
             self.custom_function = self.function
+
+        # NEW: Handle delegate field compatibility
+        if self.delegate and not self.custom_function:
+            self.custom_function = self.delegate
+            self.function = self.delegate
+        elif self.delegate and self.custom_function:
+            # Both exist - preserve existing behavior
+            pass
 
 @dataclass
 class WorkflowResult:
@@ -78,15 +90,15 @@ class WorkflowContext:
         self.config = config
         self._shared_context = {}
         self._clients = {}
-    
+
     def set_shared_value(self, key: str, value: Any):
         """Set a shared value accessible to all workflow steps."""
         self._shared_context[key] = ensure_serializable(value)
-    
+
     def get_shared_value(self, key: str, default: Any = None) -> Any:
         """Get a shared value from the workflow context."""
         return self._shared_context.get(key, default)
-    
+
     def get_step_result(self, step_id: str, default: Any = None) -> Any:
         """Get a step result from the shared context (alias for get_shared_value)."""
         return self.get_shared_value(step_id, default)
@@ -104,10 +116,10 @@ class Workflow:
         results = {}
         completed_count = 0
         failed_count = 0
-        
+
         # Create workflow context
         context = WorkflowContext(self.config)
-        
+
         # Initialize enhanced logging if provided
         if enhanced_logger and hasattr(enhanced_logger, 'initialize_progress_tracking'):
             try:
@@ -120,14 +132,14 @@ class Workflow:
         # Simplified sequential execution for demonstration
         for step_index, step in enumerate(self.steps):
             logger.info(f"Executing step: {step.id} ({step.name})")
-            
+
             # Enhanced logging: Start step tracking
             if enhanced_logger and hasattr(enhanced_logger, 'log_step_start_async'):
                 try:
                     await enhanced_logger.log_step_start_async(step.id, step.description or step.name, step.parameters)
                 except Exception as e:
                     logger.warning(f"Enhanced logging step start failed: {e}")
-            
+
             try:
                 if step.custom_function:
                     # Enhanced logging: Initial progress
@@ -136,13 +148,13 @@ class Workflow:
                             await enhanced_logger.log_step_progress_async(step.id, 0.1, "Starting custom function execution")
                         except Exception:
                             pass
-                    
+
                     # Pass parameters correctly to the function
                     step_result = await step.custom_function(context, step, **step.parameters)
                     results[step.id] = ensure_serializable(step_result)
                     context.set_shared_value(step.id, step_result) # Make result available in shared context
                     completed_count += 1
-                    
+
                     # Enhanced logging: Step completion
                     if enhanced_logger and hasattr(enhanced_logger, 'log_step_end_async'):
                         try:
@@ -159,7 +171,7 @@ class Workflow:
                                     await enhanced_logger.log_step_progress_async(step.id, 0.2, "Initializing MCP client")
                                 except Exception:
                                     pass
-                            
+
                             # Dynamically import the client based on server_name
                             if step.server_name == "ovr_github":
                                 from clients import GitHubMCPClient as ClientClass
@@ -172,24 +184,24 @@ class Workflow:
 
                             client = context._clients.get(step.server_name) or ClientClass(context.config.config_path)
                             context._clients[step.server_name] = client
-                            
+
                             # Enhanced logging: Tool execution progress
                             if enhanced_logger and hasattr(enhanced_logger, 'log_step_progress_async'):
                                 try:
                                     await enhanced_logger.log_step_progress_async(step.id, 0.5, f"Executing {step.tool_name}")
                                 except Exception:
                                     pass
-                            
+
                             logger.info(f"Calling MCP tool '{step.tool_name}' on server '{step.server_name}' for step '{step.id}'")
                             tool_result = await client.call_tool_with_retry(
-                                step.tool_name, 
+                                step.tool_name,
                                 step.parameters,
                                 retry_count=step.retry_count
                             )
                             results[step.id] = ensure_serializable(tool_result)
                             context.set_shared_value(step.id, tool_result)
                             completed_count += 1
-                            
+
                             # Enhanced logging: Tool completion
                             if enhanced_logger and hasattr(enhanced_logger, 'log_step_end_async'):
                                 try:
@@ -200,14 +212,14 @@ class Workflow:
                             logger.error(f"MCP client call failed for step {step.id} ({step.name}): {client_e}")
                             results[step.id] = {"error": str(client_e)}
                             failed_count += 1
-                            
+
                             # Enhanced logging: Step failure
                             if enhanced_logger and hasattr(enhanced_logger, 'log_step_end_async'):
                                 try:
                                     await enhanced_logger.log_step_end_async(step.id, {"error": str(client_e)}, False)
                                 except Exception:
                                     pass
-                            
+
                             if self.config.stop_on_error:
                                 break
                     else:
@@ -215,7 +227,7 @@ class Workflow:
                         logger.warning(f"Unhandled step type: {step.step_type.name} for step {step.id}. Mocking execution.")
                         results[step.id] = {"status": "mocked_unhandled", "step_type": step.step_type.name}
                         completed_count += 1
-                        
+
                         # Enhanced logging: Mocked step completion
                         if enhanced_logger and hasattr(enhanced_logger, 'log_step_end_async'):
                             try:
@@ -226,17 +238,17 @@ class Workflow:
                 logger.error(f"Step {step.id} failed: {e}")
                 results[step.id] = {"error": str(e)}
                 failed_count += 1
-                
+
                 # Enhanced logging: General step failure
                 if enhanced_logger and hasattr(enhanced_logger, 'log_step_end_async'):
                     try:
                         await enhanced_logger.log_step_end_async(step.id, {"error": str(e)}, False)
                     except Exception:
                         pass
-                
+
                 if self.config.stop_on_error:
                     break
-        
+
         duration = time.time() - start_time
         success_rate = (completed_count / len(self.steps)) * 100 if self.steps else 100
 
@@ -268,7 +280,7 @@ class Workflow:
 
 class WorkflowBuilder:
     """A fluent builder for constructing GraphMCP workflows."""
-    
+
     def __init__(self, name: str, config_path: str, description: str = ""):
         self._config = WorkflowConfig(name=name, config_path=config_path, description=description)
         self._steps: List[WorkflowStep] = []
@@ -281,9 +293,9 @@ class WorkflowBuilder:
         self._config.default_retry_count = default_retry_count
         return self
 
-    def custom_step(self, step_id: str, name: str, func: Callable, 
-                   description: str = "", parameters: Dict = None, 
-                   depends_on: List[str] = None, timeout_seconds: int = None, 
+    def custom_step(self, step_id: str, name: str, func: Callable,
+                   description: str = "", parameters: Dict = None,
+                   depends_on: List[str] = None, timeout_seconds: int = None,
                    retry_count: int = None, **kwargs) -> WorkflowBuilder:
         """Add a custom step with a user-defined function."""
         step = WorkflowStep(
@@ -300,13 +312,52 @@ class WorkflowBuilder:
         self._steps.append(step)
         return self
 
-    def repomix_pack_repo(self, step_id: str, repo_url: str, 
+    def step(self, step_id: str, name: str, delegate: Callable,
+             description: str = "", parameters: Dict = None,
+             depends_on: List[str] = None, timeout_seconds: int = None,
+             retry_count: int = None, **kwargs) -> WorkflowBuilder:
+        """
+        Add a workflow step with a delegate function.
+        
+        This method provides the same functionality as custom_step() but with
+        a more intuitive name and parameter. Supports lambda delegates for
+        inline function definitions.
+        
+        Args:
+            step_id: Unique identifier for the step
+            name: Human-readable name for the step
+            delegate: Callable function to execute for this step
+            description: Optional description of the step
+            parameters: Optional parameters to pass to the delegate
+            depends_on: Optional list of step IDs this step depends on
+            timeout_seconds: Optional timeout for step execution
+            retry_count: Optional number of retries for failed steps
+            **kwargs: Additional keyword arguments
+            
+        Returns:
+            WorkflowBuilder: Self for method chaining
+        """
+        step = WorkflowStep(
+            id=step_id,
+            name=name,
+            description=description,
+            step_type=StepType.CUSTOM,
+            delegate=delegate,
+            parameters=parameters or {},
+            depends_on=depends_on or [],
+            timeout_seconds=timeout_seconds or self._config.default_timeout,
+            retry_count=retry_count or self._config.default_retry_count
+        )
+        self._steps.append(step)
+        return self
+
+    def repomix_pack_repo(self, step_id: str, repo_url: str,
                          include_patterns: List[str] = None,
                          exclude_patterns: List[str] = None,
                          parameters: Dict = None, **kwargs) -> WorkflowBuilder:
         """Add a Repomix repository packing step."""
         # Remove the async def step_func as it will now be handled by Workflow.execute
-        
+
         step_params = {
             "repo_url": repo_url,
             "include_patterns": include_patterns,
@@ -314,7 +365,7 @@ class WorkflowBuilder:
         }
         if parameters:
             step_params.update(parameters)
-        
+
         step = WorkflowStep(
             id=step_id,
             name=f"Pack Repo: {repo_url}",
@@ -329,7 +380,7 @@ class WorkflowBuilder:
         self._steps.append(step)
         return self
 
-    def github_analyze_repo(self, step_id: str, repo_url: str, 
+    def github_analyze_repo(self, step_id: str, repo_url: str,
                            parameters: Dict = None, **kwargs) -> WorkflowBuilder:
         """Add a GitHub repository analysis step."""
         # Remove the async def step_func
@@ -352,7 +403,7 @@ class WorkflowBuilder:
         self._steps.append(step)
         return self
 
-    def github_create_pr(self, step_id: str, title: str, head: str, base: str, 
+    def github_create_pr(self, step_id: str, title: str, head: str, base: str,
                         body_template: str, parameters: Dict = None, **kwargs) -> WorkflowBuilder:
         """Add a GitHub pull request creation step."""
         # Remove the async def step_func
@@ -402,8 +453,8 @@ class WorkflowBuilder:
         )
         self._steps.append(step)
         return self
-    
-    def gpt_step(self, step_id: str, model: str, prompt: str, 
+
+    def gpt_step(self, step_id: str, model: str, prompt: str,
                 parameters: Dict = None, **kwargs) -> WorkflowBuilder:
         """Add a GPT analysis step."""
         async def step_func(context, step, **params):
@@ -434,4 +485,4 @@ class WorkflowBuilder:
     def build(self) -> Workflow:
         """Build and return the configured workflow."""
         logger.info(f"Building workflow '{self._config.name}' with {len(self._steps)} steps.")
-        return Workflow(self._config, self._steps) 
+        return Workflow(self._config, self._steps)

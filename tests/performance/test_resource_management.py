@@ -26,8 +26,8 @@ class TestResourceManagement:
         workflows = []
         for i in range(10):
             workflow = (WorkflowBuilder(f"load-test-{i}", mock_config_path)
-                .custom_step("step1", "Test Step", lambda ctx, step: {"result": f"test-{i}"})
-                .custom_step("step2", "Test Step 2", lambda ctx, step: {"result": f"test2-{i}"})
+                .step("step1", "Test Step", lambda ctx, step, **params: {"result": f"test-{i}"})
+                .step("step2", "Test Step 2", lambda ctx, step, **params: {"result": f"test2-{i}"})
                 .build()
             )
             workflows.append(workflow)

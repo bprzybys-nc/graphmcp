@@ -35,8 +35,8 @@ class RepoQuickScanTemplate:
         return (builder
             .repomix_pack_repo(f"{step_prefix}_pack", repo_url)
             .github_analyze_repo(f"{step_prefix}_analyze", repo_url)
-            .custom_step(f"{step_prefix}_security", "Security Scan", 
-                         security_scan_function, depends_on=[f"{step_prefix}_pack"])
+            .step(f"{step_prefix}_security", "Security Scan", 
+                         lambda context, step, **params: security_scan_function(context, step, **params), depends_on=[f"{step_prefix}_pack"])
         )
 
 class PromptTemplate:
@@ -280,10 +280,10 @@ class TestWorkflowBuilderExtensions:
         """Test custom step creation with proper function handling."""
         builder = WorkflowBuilder("test-workflow", mock_config_path)
         
-        builder.custom_step(
+        builder.step(
             "custom_processing",
             "Custom Processing Step",
-            custom_function_helper,
+            lambda context, step, **params: custom_function_helper(context, step, **params),
             description="Test custom step description",
             parameters={"mode": "advanced"},
             timeout_seconds=60
@@ -455,7 +455,7 @@ class TestSerializationSafety:
         """Test that workflow step metadata is serializable."""
         builder = WorkflowBuilder("test-workflow", mock_config_path)
         
-        builder.custom_step("test", "Test Step", custom_function_helper)
+        builder.step("test", "Test Step", lambda context, step, **params: custom_function_helper(context, step, **params))
         workflow = builder.build()
         
         # Test step metadata serialization (excluding functions)
@@ -493,7 +493,7 @@ class TestWorkflowExecution:
         builder = WorkflowBuilder("test-workflow", mock_config_path)
         
         workflow = (builder
-            .custom_step("step1", "Simple Step", custom_function_helper)
+            .step("step1", "Simple Step", lambda context, step, **params: custom_function_helper(context, step, **params))
             .build()
         )
         
@@ -516,8 +516,8 @@ class TestWorkflowExecution:
         
         builder = WorkflowBuilder("test-workflow", mock_config_path)
         workflow = (builder
-            .custom_step("step1", "First Step", step1_func)
-            .custom_step("step2", "Second Step", step2_func, depends_on=["step1"])
+            .step("step1", "First Step", lambda context, step, **params: step1_func(context, step, **params))
+            .step("step2", "Second Step", lambda context, step, **params: step2_func(context, step, **params), depends_on=["step1"])
             .build()
         )
         

@@ -80,7 +80,7 @@ class TestRealIntegration:
         async def execute_github_workflow():
             workflow = (WorkflowBuilder("e2e-github", "clients/mcp_config.json")
                 .github_analyze_repo("analyze", "https://github.com/microsoft/typescript")
-                .custom_step("validate", "Validate Results", validate_github_results, depends_on=["analyze"])
+                .step("validate", "Validate Results", lambda context, step, **params: validate_github_results(context, step, **params), depends_on=["analyze"])
                 .build()
             )
             
@@ -103,7 +103,7 @@ class TestRealIntegration:
         async def execute_slack_workflow():
             workflow = (WorkflowBuilder("e2e-slack", "clients/mcp_config.json")
                 .slack_post("notify", test_channel, "🧪 E2E test message from GraphMCP")
-                .custom_step("verify", "Verify Slack Post", verify_slack_post, depends_on=["notify"])
+                .step("verify", "Verify Slack Post", lambda context, step, **params: verify_slack_post(context, step, **params), depends_on=["notify"])
                 .build()
             )
             
