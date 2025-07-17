@@ -361,6 +361,38 @@ class StructuredLogger:
         self.console_handler.flush()
         sys.stdout.flush()
     
+    def log_section_separator(self, section_title: str) -> None:
+        """
+        Log a visual section separator for better console organization.
+        
+        Args:
+            section_title: Title of the section being separated
+        """
+        # Create a visual separator line
+        separator = "=" * 60
+        
+        # Format the section header
+        header_line = f"{'=' * 5} {section_title} {'=' * (55 - len(section_title))}"
+        
+        # Create log entry for the section separator
+        entry = LogEntry.create(
+            workflow_id=self.workflow_id,
+            level="INFO",
+            component="section_separator",
+            message=f"\n{header_line}\n{separator}",
+            data={"section_title": section_title}
+        )
+        
+        # Only log to console for visual separation
+        if (self.config.output_format in ["console", "dual"] and
+            self.config.is_level_enabled("INFO", "console")):
+            self._write_console_output(entry)
+        
+        # Also log to JSON file for structure tracking
+        if (self.config.output_format in ["json", "dual"] and 
+            self.config.is_level_enabled("INFO", "file")):
+            self._write_json_output(entry)
+    
     def close(self) -> None:
         """Close all handlers and cleanup resources."""
         self.file_handler.close()
