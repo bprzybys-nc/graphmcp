@@ -1,14 +1,6 @@
-## FEATURE: Database Decommissioning Workflow - Custom step -> Step
+## FEATURE: Database Decommissioning Workflow - <Feture name>
 
-I'd like workflow builder custom_step methid to be called step and instead of fuctionm/action, delegate be defined as lambda with params in call.  
-ONLY IF IT NOT CAUSE DISRUPTION! Otherwise stop
-
-Requirements:
-Separate branch before starting refactor
-
-Acceptance Criteria:
-- Db decommissioning workflow works after refactoring
-
+<Feat description>
 
 ## EXAMPLES:
 
