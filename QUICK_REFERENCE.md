@@ -13,7 +13,7 @@
 | `FilesystemMCPClient` | File operations | Structured data | `await fs.search_files("*.py", "/src")` |
 | `BrowserMCPClient` | Web automation | String/basic data | `await browser.navigate_to_url(url)` |
 
-## 🚀 NEW: GitHub Workflow Operations
+## 🚀 GitHub Workflow Operations
 
 | Operation | Method | Returns | Example |
 |-----------|--------|---------|---------|

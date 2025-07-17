@@ -50,7 +50,7 @@ def create_db_decommission_workflow(
     slack_channel: str = "C01234567",
     config_path: str = "mcp_config.json",
     workflow_id: Optional[str] = None
-) -> "Workflow":
+) -> Workflow:
     """
     Create database decommissioning workflow with pattern discovery and contextual rules.
     

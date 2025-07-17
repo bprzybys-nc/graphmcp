@@ -1,39 +1,13 @@
-## FEATURE: Database Decommissioning Workflow - Production Ready
+## FEATURE: Database Decommissioning Workflow - Custom step -> Step
 
-### Overview
-A comprehensive database decommissioning workflow that automatically identifies, processes, and removes database references from target repositories with quality assurance and automated PR creation.
+I'd like workflow builder custom_step methid to be called step and instead of fuctionm/action, delegate be defined as lambda with params in call.  
+ONLY IF IT NOT CAUSE DISRUPTION! Otherwise stop
 
-### Architecture Flow
-1. **Environment Validation**: Validates environment setup and initializes components with centralized secrets management
-2. **Repository Processing**: Uses Repomix MCP to pack target repositories into XML format and save /Users/blaisem4/src/graphmcp/tests/data/ dont delete it after flow
-3. **Pattern Discovery**: From repo pack as filepath Extracts files containion database references using pattern matching and file classification
-4. **Contextual Refactoring**: Applies type-specific refactoring rules based on file classification to the file
-5. **Quality Assurance**: Performs comprehensive validation checks on refactored code. QA step data flow requires discovery results from previous steps
-6. **GitHub Integration**: Creates forks, branches, and pull requests with changes
-7. **Workflow Summary**: Generates detailed metrics and completion reports
+Requirements:
+Separate branch before starting refactor
 
-MAKE IT WORK PROPERLY proven by errorless run 'source .venv/bin/activate && python run_db_workflow.py --database postgres_air --repo "https://github.com/bprzybysz/postgres-sample-dbs"' with these params
-once you manage download repopack properly dont del it and in next step use as a branch when param --mock=True or --mock 
-
-### Current Status
-- ✅ Environment validation and MCP client initialization
-- ✅ Repository packing with Repomix integration
-- ✅ Pattern discovery and file extraction
-- ✅ Structured logging and metrics collection
-- ✅ Quality assurance framework
-- ⚠️ **ISSUES IDENTIFIED**: 
-  - Repomix integration needs mock data fallback fixes
-  - QA step data flow requires discovery results from previous steps
-  - File refactoring logic needs proper data structure handling
-
-### Key Features
-- **Multi-MCP Integration**: GitHub, Slack, and Repomix MCP servers
-- **Structured Logging**: Comprehensive workflow tracking with visual output
-- **Error Handling**: Graceful degradation with detailed error reporting
-- **Quality Assurance**: Automated validation of database reference removal
-- **Visual Reporting**: Git diff-style (reed/green) output with dark theme formatting for refactor changes preview
-- **Cleanup**: Debug level to file log but info level white/color structured logging supported. there should be logic for levels setup.
-- **Cleanup**: Check console output think of hopw to loeverage visual eeffectts to present relovant data in output
+Acceptance Criteria:
+- Db decommissioning workflow works after refactoring
 
 
 ## EXAMPLES:
