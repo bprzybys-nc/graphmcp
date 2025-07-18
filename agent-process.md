@@ -10,7 +10,7 @@ Patch `_process_discovered_files_with_rules` to:
 
 ---
 
-## High-Level Steps
+## High-Level Stepsread 
 1. **Initialize batch size**: Use a parameter (default 3) for batch size.
 2. **Classify and group files**: Use `classify_file` to categorize all discovered files.
 3. **For each category**:

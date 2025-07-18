@@ -1,0 +1,54 @@
+{
+  "contextEngineering": {
+    "enabled": true,
+    "version": "1.0.0",
+    "framework": "GraphMCP"
+  },
+  "directories": {
+    "prps": "PRPs",
+    "examples": "examples",
+    "documentation": "docs",
+    "templates": "templates"
+  },
+  "validation": {
+    "requireTests": true,
+    "requireDocumentation": true,
+    "requireTypeHints": true,
+    "maxFileSize": 500,
+    "coverageThreshold": 80
+  },
+  "patterns": {
+    "mcpClient": {
+      "baseClass": "BaseMCPClient",
+      "asyncRequired": true,
+      "errorHandling": "structured",
+      "logging": "structured"
+    },
+    "workflow": {
+      "builderPattern": "fluent",
+      "preferredStepMethod": "step_auto",
+      "contextManagement": "workflow_context",
+      "logging": "structured"
+    },
+    "testing": {
+      "framework": "pytest",
+      "asyncSupport": true,
+      "markers": ["unit", "integration", "e2e", "slow", "external"],
+      "fixtures": "conftest.py"
+    }
+  },
+  "codeQuality": {
+    "linter": "ruff",
+    "formatter": "black",
+    "typeChecker": "mypy",
+    "preCommit": true
+  },
+  "implementation": {
+    "language": "python",
+    "minVersion": "3.11",
+    "packageManager": "uv",
+    "virtualEnv": ".venv",
+    "asyncFirst": true,
+    "typeHints": "required"
+  }
+}
