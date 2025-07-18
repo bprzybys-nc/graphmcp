@@ -1,6 +1,7 @@
 """
 GraphMCP Clients Package
 """
+
 from .base import BaseMCPClient
 from .repomix import RepomixMCPClient
 from .slack import SlackMCPClient
@@ -16,8 +17,10 @@ logger = logging.getLogger(__name__)
 # We can add placeholder classes for them for completeness,
 # even if they are not used in the final workflow.
 
+
 class Context7MCPClient(BaseMCPClient):
     SERVER_NAME = "ovr_context7"
+
     def __init__(self, config_path):
         super().__init__(config_path)
 
@@ -30,10 +33,7 @@ class Context7MCPClient(BaseMCPClient):
             return [tool.get("name") for tool in result.get("tools", [])]
         except Exception as e:
             logger.warning(f"Failed to list Context7 tools: {e}")
-            return [
-                "resolve-library-id",
-                "get-library-docs"
-            ]
+            return ["resolve-library-id", "get-library-docs"]
 
     async def health_check(self) -> bool:
         """
@@ -41,10 +41,14 @@ class Context7MCPClient(BaseMCPClient):
         """
         try:
             await self.list_available_tools()
-            logger.debug(f"Context7MCPClient ({self.server_name}) health check successful.")
+            logger.debug(
+                f"Context7MCPClient ({self.server_name}) health check successful."
+            )
             return True
         except Exception as e:
-            logger.warning(f"Context7MCPClient ({self.server_name}) health check failed: {e}")
+            logger.warning(
+                f"Context7MCPClient ({self.server_name}) health check failed: {e}"
+            )
             return False
 
     async def resolve_library_id(self, library_name: str) -> Dict[str, Any]:
@@ -52,32 +56,35 @@ class Context7MCPClient(BaseMCPClient):
         Resolve a library ID based on its name.
         """
         try:
-            result = await self.call_tool_with_retry("resolve-library-id", {"libraryName": library_name})
+            result = await self.call_tool_with_retry(
+                "resolve-library-id", {"libraryName": library_name}
+            )
             return result
         except Exception as e:
             logger.warning(f"Failed to resolve library ID for {library_name}: {e}")
             return {"error": str(e)}
 
-    async def get_library_docs(self, library_id: str, topic: str = None, tokens: int = 10000) -> Dict[str, Any]:
+    async def get_library_docs(
+        self, library_id: str, topic: str = None, tokens: int = 10000
+    ) -> Dict[str, Any]:
         """
         Get documentation for a specific library.
         """
         try:
-            params = {
-                "context7CompatibleLibraryID": library_id,
-                "tokens": tokens
-            }
+            params = {"context7CompatibleLibraryID": library_id, "tokens": tokens}
             if topic:
                 params["topic"] = topic
-                
+
             result = await self.call_tool_with_retry("get-library-docs", params)
             return result
         except Exception as e:
             logger.warning(f"Failed to get library docs for {library_id}: {e}")
             return {"error": str(e)}
 
+
 class BrowserMCPClient(BaseMCPClient):
     SERVER_NAME = "ovr_browser"
+
     def __init__(self, config_path):
         super().__init__(config_path)
 
@@ -93,7 +100,7 @@ class BrowserMCPClient(BaseMCPClient):
             return [
                 "playwright_navigate",
                 "playwright_get_visible_text",
-                "playwright_click"
+                "playwright_click",
             ]
 
     async def health_check(self) -> bool:
@@ -102,10 +109,14 @@ class BrowserMCPClient(BaseMCPClient):
         """
         try:
             await self.list_available_tools()
-            logger.debug(f"BrowserMCPClient ({self.server_name}) health check successful.")
+            logger.debug(
+                f"BrowserMCPClient ({self.server_name}) health check successful."
+            )
             return True
         except Exception as e:
-            logger.warning(f"BrowserMCPClient ({self.server_name}) health check failed: {e}")
+            logger.warning(
+                f"BrowserMCPClient ({self.server_name}) health check failed: {e}"
+            )
             return False
 
     # Example method for BrowserMCPClient (navigate and get text)
@@ -115,14 +126,19 @@ class BrowserMCPClient(BaseMCPClient):
         """
         try:
             # Use a dummy string for the random_string parameter of playwright_get_visible_text
-            result = await self._send_mcp_request("tools/playwright_navigate", {"url": url})
-            if result: # Check if navigation was successful
-                text_result = await self._send_mcp_request("tools/playwright_get_visible_text", {"random_string": "dummy"})
+            result = await self._send_mcp_request(
+                "tools/playwright_navigate", {"url": url}
+            )
+            if result:  # Check if navigation was successful
+                text_result = await self._send_mcp_request(
+                    "tools/playwright_get_visible_text", {"random_string": "dummy"}
+                )
                 return text_result.get("text", "")
             return ""
         except Exception as e:
             logger.error(f"Failed to navigate and get text for {url}: {e}")
             return ""
+
 
 __all__ = [
     "BaseMCPClient",
@@ -133,4 +149,4 @@ __all__ = [
     "PreviewMCPClient",
     "Context7MCPClient",
     "BrowserMCPClient",
-] 
+]

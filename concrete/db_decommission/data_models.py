@@ -16,16 +16,17 @@ from typing import Any, Dict, List, Optional
 from enum import Enum
 
 # Import source type from classifier
-from concrete.source_type_classifier import SourceType
+from utils.source_type_classifier import SourceType
 
 
 @dataclass
 class FileProcessingResult:
     """
     Result from processing a file during decommissioning.
-    
+
     Compatibility class for AgenticFileProcessor with enhanced tracking.
     """
+
     file_path: str
     source_type: SourceType
     success: bool
@@ -34,14 +35,14 @@ class FileProcessingResult:
     error_message: Optional[str] = None
     timestamp: Optional[float] = None
     processing_duration_ms: Optional[int] = None
-    
+
     def __post_init__(self):
         """Initialize default values."""
         if self.timestamp is None:
             self.timestamp = time.time()
         if self.rules_applied is None:
             self.rules_applied = []
-    
+
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary format for serialization."""
         return {
@@ -52,7 +53,7 @@ class FileProcessingResult:
             "rules_applied": self.rules_applied,
             "error_message": self.error_message,
             "timestamp": self.timestamp,
-            "processing_duration_ms": self.processing_duration_ms
+            "processing_duration_ms": self.processing_duration_ms,
         }
 
 
@@ -60,9 +61,10 @@ class FileProcessingResult:
 class WorkflowConfig:
     """
     Configuration for database decommissioning workflow.
-    
+
     Centralized configuration with environment variable support.
     """
+
     database_name: str
     repo_owner: str
     repo_name: str
@@ -74,12 +76,12 @@ class WorkflowConfig:
     enable_slack_notifications: bool = True
     dry_run: bool = False
     timestamp: Optional[float] = None
-    
+
     def __post_init__(self):
         """Initialize default values."""
         if self.timestamp is None:
             self.timestamp = time.time()
-    
+
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary format for serialization."""
         return {
@@ -93,12 +95,13 @@ class WorkflowConfig:
             "enable_json_logging": self.enable_json_logging,
             "enable_slack_notifications": self.enable_slack_notifications,
             "dry_run": self.dry_run,
-            "timestamp": self.timestamp
+            "timestamp": self.timestamp,
         }
 
 
 class ValidationResult(Enum):
     """Enumeration of validation results."""
+
     PASSED = "passed"
     FAILED = "failed"
     WARNING = "warning"
@@ -109,9 +112,10 @@ class ValidationResult(Enum):
 class QualityAssuranceResult:
     """
     Result from quality assurance checks.
-    
+
     Comprehensive QA result with detailed metrics.
     """
+
     database_reference_check: ValidationResult
     rule_compliance_check: ValidationResult
     service_integrity_check: ValidationResult
@@ -119,14 +123,14 @@ class QualityAssuranceResult:
     details: Dict[str, Any]
     recommendations: List[str]
     timestamp: Optional[float] = None
-    
+
     def __post_init__(self):
         """Initialize default values."""
         if self.timestamp is None:
             self.timestamp = time.time()
         if self.recommendations is None:
             self.recommendations = []
-    
+
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary format for serialization."""
         return {
@@ -136,7 +140,7 @@ class QualityAssuranceResult:
             "overall_status": self.overall_status.value,
             "details": self.details,
             "recommendations": self.recommendations,
-            "timestamp": self.timestamp
+            "timestamp": self.timestamp,
         }
 
 
@@ -144,9 +148,10 @@ class QualityAssuranceResult:
 class WorkflowStepResult:
     """
     Result from a single workflow step execution.
-    
+
     Standardized step result with metrics and context.
     """
+
     step_name: str
     step_id: str
     success: bool
@@ -156,7 +161,7 @@ class WorkflowStepResult:
     warnings: Optional[List[str]] = None
     metrics: Optional[Dict[str, Any]] = None
     timestamp: Optional[float] = None
-    
+
     def __post_init__(self):
         """Initialize default values."""
         if self.timestamp is None:
@@ -165,7 +170,7 @@ class WorkflowStepResult:
             self.warnings = []
         if self.metrics is None:
             self.metrics = {}
-    
+
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary format for serialization."""
         return {
@@ -177,7 +182,7 @@ class WorkflowStepResult:
             "error_message": self.error_message,
             "warnings": self.warnings,
             "metrics": self.metrics,
-            "timestamp": self.timestamp
+            "timestamp": self.timestamp,
         }
 
 
@@ -185,9 +190,10 @@ class WorkflowStepResult:
 class DecommissioningSummary:
     """
     Summary of the entire decommissioning workflow.
-    
+
     Comprehensive workflow summary with all key metrics.
     """
+
     workflow_id: str
     database_name: str
     total_files_processed: int
@@ -199,19 +205,19 @@ class DecommissioningSummary:
     quality_assurance: QualityAssuranceResult
     github_pr_url: Optional[str] = None
     timestamp: Optional[float] = None
-    
+
     def __post_init__(self):
         """Initialize default values."""
         if self.timestamp is None:
             self.timestamp = time.time()
-    
+
     @property
     def success_rate(self) -> float:
         """Calculate success rate as percentage."""
         if self.total_files_processed == 0:
             return 0.0
         return (self.successful_files / self.total_files_processed) * 100.0
-    
+
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary format for serialization."""
         return {
@@ -223,8 +229,10 @@ class DecommissioningSummary:
             "total_changes": self.total_changes,
             "rules_applied": self.rules_applied,
             "execution_time_seconds": self.execution_time_seconds,
-            "quality_assurance": self.quality_assurance.to_dict() if self.quality_assurance else None,
+            "quality_assurance": (
+                self.quality_assurance.to_dict() if self.quality_assurance else None
+            ),
             "github_pr_url": self.github_pr_url,
             "success_rate": self.success_rate,
-            "timestamp": self.timestamp
+            "timestamp": self.timestamp,
         }

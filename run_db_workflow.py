@@ -20,26 +20,40 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Add current directory to path
-sys.path.insert(0, '.')
+sys.path.insert(0, ".")
 
 from concrete.db_decommission import run_decommission
 
 
 async def main():
-    parser = argparse.ArgumentParser(description='Run database decommissioning workflow')
-    parser.add_argument('--database', required=True, help='Database name to decommission')
-    parser.add_argument('--repo', default='https://github.com/bprzybysz/postgres-sample-dbs', help='Target repository')
-    parser.add_argument('--slack-channel', default='demo-channel', help='Slack channel for notifications')
-    parser.add_argument('--mock', action='store_true', help='Use mock data from tests/data/ directory')
-    
+    parser = argparse.ArgumentParser(
+        description="Run database decommissioning workflow"
+    )
+    parser.add_argument(
+        "--database", required=True, help="Database name to decommission"
+    )
+    parser.add_argument(
+        "--repo",
+        default="https://github.com/bprzybysz/postgres-sample-dbs",
+        help="Target repository",
+    )
+    parser.add_argument(
+        "--slack-channel",
+        default="demo-channel",
+        help="Slack channel for notifications",
+    )
+    parser.add_argument(
+        "--mock", action="store_true", help="Use mock data from tests/data/ directory"
+    )
+
     args = parser.parse_args()
-    
+
     # Check for cached mock data first
     if args.mock:
         # Check both tmp/<database-name>/ and tests/data/ for existing data
         tmp_repo_pack_path = Path(f"tmp/{args.database}/{args.database}_repo_pack.xml")
         tests_repo_pack_path = Path(f"tests/data/{args.database}_mock_repo_pack.xml")
-        
+
         if tmp_repo_pack_path.exists():
             print(f"✅ Using cached repo pack: {tmp_repo_pack_path}")
         elif tests_repo_pack_path.exists():
@@ -47,45 +61,47 @@ async def main():
         else:
             print("⚠️  Mock data not found, falling back to real data")
             args.mock = False
-    
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-    
+
+    logging.basicConfig(
+        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+    )
+
     print(f"🚀 Starting decommission workflow for database: {args.database}")
     print(f"📦 Target repository: {args.repo}")
     print(f"💬 Slack channel: {args.slack_channel}")
     print("-" * 80)
-    
+
     # Initialize logger for workflow visualization
     from graphmcp_logging import get_logger
     from graphmcp_logging import LoggingConfig
-    
+
     config = LoggingConfig.from_env()
     logger = get_logger(f"db_decommission_{args.database}", config)
-    
+
     # Display workflow tree
     workflow_steps = [
         "Environment Validation & Setup",
-        "Repository Processing with Pattern Discovery", 
+        "Repository Processing with Pattern Discovery",
         "Apply Contextual Refactoring Rules",
         "Create GitHub Pull Request",
         "Quality Assurance & Validation",
-        "Workflow Summary & Metrics"
+        "Workflow Summary & Metrics",
     ]
-    
+
     logger.log_workflow_step_tree(
         step_name="Database Decommissioning Workflow",
         sub_steps=workflow_steps,
-        current_sub_step=workflow_steps[0]
+        current_sub_step=workflow_steps[0],
     )
-    
+
     try:
         result = await run_decommission(
             database_name=args.database,
             target_repos=[args.repo],
             slack_channel=args.slack_channel,
-            mock_mode=args.mock
+            mock_mode=args.mock,
         )
-        
+
         print("\n" + "=" * 80)
         print("✅ Workflow completed successfully!")
         print(f"📊 Status: {result.status}")
@@ -93,9 +109,9 @@ async def main():
         print(f"📈 Success Rate: {result.success_rate:.1f}%")
         print(f"🔧 Steps Completed: {result.steps_completed}")
         print(f"❌ Steps Failed: {result.steps_failed}")
-        
+
         return 0
-        
+
     except Exception as e:
         print(f"\n❌ Workflow failed with error: {e}")
         return 1

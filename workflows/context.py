@@ -16,16 +16,17 @@ from utils import ensure_serializable
 class WorkflowContext:
     """
     Shared data context for workflow steps.
-    
+
     Provides safe serialization and data sharing between workflow steps
     following GraphMCP patterns for state management.
-    
+
     Args:
         data: Dictionary of step data, automatically serialized for safety
         metadata: Workflow metadata (timestamps, execution info, etc.)
         created_at: Timestamp when context was created
         last_updated: Timestamp when context was last modified
     """
+
     data: Dict[str, Any] = field(default_factory=dict)
     metadata: Dict[str, Any] = field(default_factory=dict)
     created_at: Optional[float] = None
@@ -41,7 +42,7 @@ class WorkflowContext:
     def set(self, key: str, value: Any) -> None:
         """
         Set context data with serialization safety.
-        
+
         Args:
             key: Data key
             value: Data value (will be made serializable)
@@ -52,11 +53,11 @@ class WorkflowContext:
     def get(self, key: str, default: Any = None) -> Any:
         """
         Get context data.
-        
+
         Args:
             key: Data key
             default: Default value if key not found
-            
+
         Returns:
             Data value or default
         """
@@ -65,10 +66,10 @@ class WorkflowContext:
     def has(self, key: str) -> bool:
         """
         Check if context has a key.
-        
+
         Args:
             key: Data key to check
-            
+
         Returns:
             True if key exists
         """
@@ -77,10 +78,10 @@ class WorkflowContext:
     def remove(self, key: str) -> Any:
         """
         Remove and return data for a key.
-        
+
         Args:
             key: Data key to remove
-            
+
         Returns:
             Removed value or None if key not found
         """
@@ -92,7 +93,7 @@ class WorkflowContext:
     def update_metadata(self, **kwargs) -> None:
         """
         Update metadata with new values.
-        
+
         Args:
             **kwargs: Metadata key-value pairs
         """
@@ -102,7 +103,7 @@ class WorkflowContext:
     def to_dict(self) -> Dict[str, Any]:
         """
         Convert to dictionary format for serialization.
-        
+
         Returns:
             Dictionary representation with serialization safety
         """
@@ -114,13 +115,13 @@ class WorkflowContext:
         }
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> 'WorkflowContext':
+    def from_dict(cls, data: Dict[str, Any]) -> "WorkflowContext":
         """
         Create WorkflowContext from dictionary.
-        
+
         Args:
             data: Dictionary with context data
-            
+
         Returns:
             WorkflowContext instance
         """
@@ -135,8 +136,8 @@ class WorkflowContext:
         """Custom pickling to ensure serialization safety."""
         state = self.__dict__.copy()
         # Ensure all data is serializable
-        state['data'] = ensure_serializable(state['data'])
-        state['metadata'] = ensure_serializable(state['metadata'])
+        state["data"] = ensure_serializable(state["data"])
+        state["metadata"] = ensure_serializable(state["metadata"])
         return state
 
     def __setstate__(self, state):

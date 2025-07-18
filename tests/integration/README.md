@@ -127,7 +127,8 @@ source .venv/bin/activate
 pip install pytest pytest-asyncio
 
 # Verify core modules can be imported
-python -c "from concrete.contextual_rules_engine import ContextualRulesEngine; print('✅ Ready')"
+# Note: contextual_rules_engine was removed during refactoring
+python -c "from utils.source_type_classifier import SourceTypeClassifier; print('✅ Ready')"
 ```
 
 ### Environment Variables
@@ -165,10 +166,11 @@ export PYTEST_VERBOSE=1
 python -c "from tests.integration.test_contextual_rules_integration import TestContextualRulesEngineIntegration; print('✅ Imports work')"
 
 # Validate rule loading
-python -c "from concrete.contextual_rules_engine import create_contextual_rules_engine; engine = create_contextual_rules_engine(); rules = engine._load_infrastructure_rules(); print(f'✅ {len(rules)} rules loaded')"
+# Note: contextual_rules_engine was removed during refactoring
+# python -c "from concrete.contextual_rules_engine import create_contextual_rules_engine; engine = create_contextual_rules_engine(); rules = engine._load_infrastructure_rules(); print(f'✅ {len(rules)} rules loaded')"
 
 # Check source type classification
-python -c "from concrete.source_type_classifier import SourceTypeClassifier; classifier = SourceTypeClassifier(); result = classifier.classify_file('test.tf', 'resource \"aws_db\" \"test\" {}'); print(f'✅ Classified as {result.source_type}')"
+python -c "from utils.source_type_classifier import SourceTypeClassifier; classifier = SourceTypeClassifier(); result = classifier.classify_file('test.tf', 'resource \"aws_db\" \"test\" {}'); print(f'✅ Classified as {result.source_type}')"
 ```
 
 ## 📋 Test Checklist
