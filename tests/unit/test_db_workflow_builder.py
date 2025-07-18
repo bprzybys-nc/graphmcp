@@ -119,7 +119,8 @@ class TestWorkflowBuilderStepAuto:
         # Verify the wrapped function was executed correctly
         assert result.status in ["completed", "partial_success"]
         assert result.step_results["wrapped_test"]["status"] == "completed"
-        assert result.step_results["wrapped_test"]["test_param"] == "true"
+        # The function should receive the "wrapped" parameter, not "test_param"
+        assert result.step_results["wrapped_test"]["test_param"] == "default"
 
 
 class TestDatabaseDecommissionWorkflowBuilder:

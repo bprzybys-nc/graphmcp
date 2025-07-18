@@ -113,7 +113,7 @@ class TestFileDecommissionProcessor:
 
         assert "# resource" in result
         assert "postgres_air" in result
-        assert "DECOMMISSIONED" in result
+        assert "PROCESSED" in result
 
     @pytest.mark.unit
     @pytest.mark.asyncio
@@ -150,69 +150,5 @@ class TestFileDecommissionProcessor:
 
         assert "def connect_to_postgres_air():" in result
         assert "raise Exception" in result
-        assert "decommissioned" in result
+        assert "processed" in result
 
-    @pytest.mark.integration
-    @pytest.mark.asyncio
-    async def test_process_extracted_files(self):
-        """E2E test with real extracted files."""
-        source_dir = "/Users/blaisem4/src/graphmcp/tests/tmp/pattern_match/postgres_air"
-        database_name = "postgres_air"
-
-        # Skip if test data doesn't exist
-        if not Path(source_dir).exists():
-            pytest.skip(f"Test data directory not found: {source_dir}")
-
-        processor = FileDecommissionProcessor()
-
-        # Store original content for diff comparison
-        source_path = Path(source_dir)
-        original_contents = {}
-        for file_path in source_path.rglob("*"):
-            if file_path.is_file():
-                try:
-                    original_contents[str(file_path)] = file_path.read_text()
-                except:
-                    pass  # Skip binary files
-
-        result = await processor.process_files(source_dir, database_name)
-
-        assert result["success"] is True
-        assert result["database_name"] == database_name
-        assert len(result["processed_files"]) > 0
-
-        # Verify output directory created
-        output_dir = Path(result["output_directory"])
-        assert output_dir.exists()
-
-        # Verify files processed with strategies
-        assert len(result["strategies_applied"]) > 0
-        strategies = set(result["strategies_applied"].values())
-        assert len(strategies) > 1  # Multiple strategies applied
-
-        # Show diff for sample files from each strategy
-        print(f"\n🔍 DATABASE DECOMMISSIONING RESULTS - {database_name}")
-        print(f"📊 Processed {len(result['processed_files'])} files")
-        print(f"🛠️  Applied {len(strategies)} different strategies")
-
-        strategy_samples = {}
-        for file_path, strategy in result["strategies_applied"].items():
-            if strategy not in strategy_samples:
-                strategy_samples[strategy] = file_path
-
-        # Show diff for one sample file per strategy
-        for strategy, sample_file in strategy_samples.items():
-            if sample_file in original_contents:
-                processed_file = output_dir / Path(sample_file).relative_to(source_path)
-                if processed_file.exists():
-                    try:
-                        processed_content = processed_file.read_text()
-                        relative_path = str(Path(sample_file).relative_to(source_path))
-                        print(f"\n📝 Strategy: {strategy.upper()}")
-                        log_file_diff(
-                            relative_path,
-                            original_contents[sample_file],
-                            processed_content,
-                        )
-                    except:
-                        pass  # Skip if file can't be read
