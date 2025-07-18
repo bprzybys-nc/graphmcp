@@ -30,7 +30,8 @@
       "Bash(PYTHONPATH=. python concrete/db_decommission/run_decommission.py --database postgres_air --mock)",
       "Bash(PYTHONPATH=. .venv/bin/python concrete/db_decommission/run_decommission.py --database postgres_air --mock)",
       "Bash(PYTHONPATH=. .venv/bin/python run_db_workflow.py --database postgres_air --mock)",
-      "mcp__filesystem__read_multiple_files"
+      "mcp__filesystem__read_multiple_files",
+      "Bash(git add:*)"
     ],
     "deny": []
   }
