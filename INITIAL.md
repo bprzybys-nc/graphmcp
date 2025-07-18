@@ -12,230 +12,347 @@ This template provides a structured way to request new features for the GraphMCP
 ## Feature Request
 
 ### Basic Information
-- **Feature Name**: Python 3.12 Upgrade
+- **Feature Name**: Concrete Directory Refactoring and Core Integration
 - **Requested By**: Development Team
-- **Date**: 2024-01-18
-- **Priority**: Medium
-- **Estimated Complexity**: Medium
+- **Date**: 2025-01-18
+- **Priority**: High
+- **Estimated Complexity**: High
 
 ### Feature Description
 
 #### What
-Upgrade the GraphMCP framework from Python 3.11 to Python 3.12 to take advantage of performance improvements, new language features, and enhanced type system capabilities.
+Comprehensive refactoring of the `concrete/` directory to clean up unused functionality, move unique capabilities to appropriate core framework locations, enhance existing core functionality with concrete improvements, and remove duplicated code while updating all references.
 
 #### Why
-Python 3.12 provides significant benefits for the GraphMCP framework:
-- **Performance**: 5-10% faster execution due to improved interpreter optimizations
-- **Type System**: Enhanced type hints and better generic type support
-- **Error Messages**: Improved error messages for better debugging experience
-- **Security**: Latest security patches and improvements
-- **Ecosystem**: Better compatibility with latest package versions
-- **Future-Proofing**: Staying current with Python development roadmap
+Analysis revealed that **~80% of concrete/ functionality is unused** by the database decommissioning workflow, and **88% of used functionality could be generalized** for broader framework use. This refactoring will:
+- **Remove ~1,400 lines of unused code** from the codebase
+- **Extract 4 unique capabilities** that don't exist in core framework
+- **Enhance 3 existing core components** with concrete improvements
+- **Eliminate duplicate functionality** and consolidate imports
+- **Transform GraphMCP** from database-specific to general-purpose entity processing framework
+- **Reduce maintenance burden** by removing over-engineered abstractions
+- **Improve code clarity** by focusing on actual requirements
 
 #### When
-- **Planning Phase**: January 2024
-- **Implementation**: February 2024
-- **Testing Phase**: March 2024
-- **Deployment**: April 2024
-- **Dependencies**: Python 3.12 availability in deployment environments
+- **Analysis Phase**: January 2025 (✅ Complete)
+- **Cleanup Phase**: January 2025 (Week 3)
+- **Migration Phase**: January 2025 (Week 4)
+- **Integration Phase**: February 2025 (Week 1)
+- **Validation Phase**: February 2025 (Week 2)
+- **Dependencies**: Completion of Python 3.12 upgrade
 
 #### Who
-- **Primary Users**: All GraphMCP framework developers
-- **Secondary Users**: End users (indirect performance benefits)
-- **Stakeholders**: DevOps team (deployment), QA team (testing), Infrastructure team
+- **Primary Users**: GraphMCP framework developers
+- **Secondary Users**: Future workflow implementers
+- **Stakeholders**: Database decommissioning workflow users, Framework architects
 
 ### Functional Requirements
 
 #### Core Functionality
-- Upgrade all Python code to be compatible with Python 3.12
-- Update all dependencies to Python 3.12 compatible versions
-- Maintain backward compatibility where possible
-- Ensure all existing functionality continues to work
-- Take advantage of new Python 3.12 features where beneficial
+- **Clean unused code**: Remove 4 completely unused files (~1,400 lines)
+- **Move unique capabilities**: Extract 4 unique components to appropriate core locations
+- **Enhance existing core**: Integrate 3 enhancement opportunities into existing core components
+- **Remove duplicates**: Eliminate duplicate functionality and consolidate imports
+- **Update references**: Update all import statements and function calls to use new locations
+- **Maintain backward compatibility**: Ensure existing workflows continue to work
 
 #### User Stories
-- As a developer, I want to use Python 3.12 so that I can leverage improved performance and new language features
-- As a developer, I want better error messages so that I can debug issues more quickly
-- As a user, I want improved performance so that workflows execute faster
-- As a DevOps engineer, I want the latest Python version so that I can maintain security and compatibility
-- As a maintainer, I want to use latest type hints so that code is more robust and maintainable
+- As a developer, I want unused code removed so that the codebase is cleaner and more maintainable
+- As a developer, I want unique capabilities in core framework so that I can reuse them in other workflows
+- As a developer, I want enhanced core functionality so that I have more powerful tools available
+- As a framework architect, I want consolidated functionality so that there's one clear way to do things
+- As a workflow implementer, I want access to generalized patterns so that I can build new workflows faster
 
 #### Success Criteria
-- All code runs successfully on Python 3.12
-- All tests pass on Python 3.12
-- Performance improves by 5-10% for typical workflows
-- No breaking changes for existing users
-- All dependencies are Python 3.12 compatible
-- Development environment setup works with Python 3.12
-- CI/CD pipeline runs successfully with Python 3.12
+- **Code reduction**: Remove ~1,400 lines of unused code
+- **Capability extraction**: Move 4 unique capabilities to core framework locations
+- **Enhancement integration**: Integrate 3 improvements into existing core components
+- **Reference updates**: All imports and function calls updated to use new locations
+- **Test coverage**: All existing tests pass after refactoring
+- **Documentation updates**: All documentation reflects new structure
+- **No functional regression**: Database decommissioning workflow continues to work identically
 
 ### Technical Requirements
 
 #### Architecture Integration
-- **Framework Component**: All components (core framework, clients, workflows, utilities)
-- **MCP Clients**: All MCP clients need Python 3.12 compatibility
-- **Workflow Integration**: No workflow changes required, but improved performance expected
-- **Dependencies**: All dependencies must be upgraded to Python 3.12 compatible versions
+- **Framework Component**: Affects entire framework structure
+- **Core Framework**: Enhance `utils/`, `clients/`, `workflows/` directories
+- **Concrete Directory**: Significant cleanup and restructuring
+- **Dependencies**: Update all import statements across the codebase
 
 #### Performance Requirements
-- **Response Time**: 5-10% improvement in workflow execution times
-- **Throughput**: Maintain current throughput with improved efficiency
-- **Scalability**: No impact on current scaling capabilities
-- **Resource Usage**: Potential memory usage improvements with Python 3.12 optimizations
+- **Response Time**: No performance degradation for existing workflows
+- **Throughput**: Maintain current throughput levels
+- **Scalability**: No impact on scaling capabilities
+- **Resource Usage**: Reduce memory usage by removing unused code
 
 #### Security Requirements
-- **Authentication**: No changes to authentication mechanisms
-- **Authorization**: No changes to authorization systems
-- **Data Protection**: Enhanced security with latest Python 3.12 security patches
-- **Compliance**: Maintain all current compliance requirements
+- **No security impact**: Refactoring should not affect security posture
+- **Maintain existing patterns**: Keep security patterns intact during moves
+- **Validation**: Ensure no sensitive functionality is accidentally removed
 
 ### Interface Requirements
 
 #### API Design
-No API changes required - maintain full backward compatibility with existing API
+- **Maintain compatibility**: All existing public APIs remain unchanged
+- **Import paths**: Update import paths but maintain functionality
+- **Function signatures**: Keep all function signatures identical
 
 #### User Interface
-No UI changes required - existing Streamlit UIs should work without modification
+- **No UI changes**: Existing Streamlit UIs should work without modification
+- **Command line**: All make commands and CLI tools should work unchanged
 
 #### Integration Points
-- Development environment setup must work with Python 3.12
-- CI/CD pipelines must be updated to use Python 3.12
-- Docker images must be updated to use Python 3.12 base images
-- Deployment scripts must specify Python 3.12
+- **Database decommissioning**: Workflow must continue to work identically
+- **Testing framework**: All tests must pass after refactoring
+- **Build system**: Make targets should continue to work
+- **Documentation**: All documentation must be updated
 
 ### Data Requirements
 
 #### Data Models
-No changes to data models - existing dataclasses and type hints should work with Python 3.12
+- **No data model changes**: Existing dataclasses and type hints unchanged
+- **Configuration**: MCP configuration files unchanged
+- **Workflow state**: Workflow execution data unchanged
 
 #### Data Storage
-No changes to data storage requirements - existing file and database operations unchanged
+- **No storage changes**: File operations and storage patterns unchanged
+- **Cache behavior**: Caching mechanisms should work identically
+- **Performance data**: Performance optimization should be maintained
 
 #### Data Processing
-No changes to data processing logic - existing async patterns and workflows unchanged
+- **Processing logic**: Core processing logic should be preserved
+- **Async patterns**: Existing async patterns should be maintained
+- **Error handling**: Error handling behavior should be identical
 
 ### Quality Requirements
 
 #### Testing
-- **Unit Tests**: All existing unit tests must pass on Python 3.12
-- **Integration Tests**: All integration tests must pass on Python 3.12
-- **E2E Tests**: All end-to-end tests must pass on Python 3.12
-- **Performance Tests**: Performance tests must show 5-10% improvement or no regression
+- **Unit Tests**: All existing unit tests must pass unchanged
+- **Integration Tests**: All integration tests must pass unchanged
+- **E2E Tests**: All end-to-end tests must pass unchanged
+- **Test coverage**: Maintain 80% coverage threshold or higher
 
 #### Documentation
-- **Code Documentation**: Update pyproject.toml and README.md to specify Python 3.12 requirement
-- **User Documentation**: Update installation instructions for Python 3.12
-- **Technical Documentation**: Document any Python 3.12 specific features utilized
+- **Code Documentation**: Update all docstrings and comments
+- **README updates**: Update README.md with new structure
+- **CLAUDE.md updates**: Update development documentation
+- **Architecture docs**: Update architecture diagrams and documentation
 
 #### Monitoring
-- **Logging**: Existing logging should work unchanged with Python 3.12
-- **Metrics**: Monitor performance improvements after upgrade
-- **Alerting**: No changes to alerting - existing patterns should work
+- **Logging**: Existing logging should work unchanged
+- **Metrics**: Performance metrics should be maintained
+- **Error tracking**: Error tracking and reporting should be unchanged
 
 ### Constraints and Assumptions
 
 #### Technical Constraints
-- All dependencies must have Python 3.12 compatible versions available
-- Development team must have access to Python 3.12 environments for testing
-- CI/CD infrastructure must support Python 3.12
-- Deployment environments must support Python 3.12
+- **Backward compatibility**: Must maintain compatibility with existing workflows
+- **No breaking changes**: Public APIs must remain unchanged
+- **Test compatibility**: All existing tests must pass without modification
+- **Performance**: No performance degradation allowed
 
 #### Business Constraints
-- No breaking changes for existing users
-- Minimal disruption to current development workflows
-- Must maintain current performance levels (improvements are bonus)
-- Upgrade must be completed within Q1 2024
+- **No downtime**: Refactoring must not disrupt development workflows
+- **Incremental**: Changes must be implementable incrementally
+- **Reversible**: Changes must be reversible if issues arise
+- **Timeline**: Complete refactoring within 3 weeks
 
 #### Assumptions
-- All current dependencies have Python 3.12 compatible versions
-- Python 3.12 is stable and ready for production use
-- Development team is familiar with Python 3.12 features
-- Infrastructure team can provide Python 3.12 deployment environments
+- **Code analysis accuracy**: Unused code analysis is accurate
+- **Import tracking**: All import dependencies have been identified
+- **Test coverage**: Existing tests cover the functionality being moved
+- **Documentation accuracy**: Current documentation accurately reflects usage
 
 ### Implementation Context
 
-#### Similar Features
-- Previous Python version upgrades (if any) in the codebase
-- Dependency upgrade patterns in other components
-- Version management strategies used in the project
+#### Specific Components to Handle
 
-#### Existing Patterns
-- Current pyproject.toml configuration patterns
-- Makefile and build system patterns
-- CI/CD pipeline configuration patterns
-- Docker and deployment configuration patterns
+##### **UNUSED Components (Delete)**
+1. **`concrete/contextual_rules_engine.py`** (542 lines) - Sophisticated rule processing never used
+2. **`concrete/visual_renderer.py`** (400+ lines) - Terminal/HTML rendering never used
+3. **`concrete/pattern_discovery.py`** (400+ lines) - AI pattern matching never used
+4. **`concrete/performance_optimization.py`** (Import only) - Functionality exists in utils/
 
-#### Code Examples
-- Reference examples/mcp_client/base_client_pattern.py for compatibility checking
-- Reference existing configuration files for upgrade patterns
-- Reference testing patterns for validation approach
+##### **UNIQUE Components (Move to Core)**
+1. **`concrete/source_type_classifier.py`** → `utils/source_type_classifier.py`
+   - Universal file type classification system (95% reusable)
+   - Framework-agnostic, extensible pattern system
+   - Core capability missing from framework
+
+2. **`concrete/file_decommission_processor.py`** → `utils/file_processor.py` (generalized)
+   - Strategy-based file processing with pluggable processors (95% reusable)
+   - Async-first design with comprehensive error handling
+   - Reusable across many workflow types
+
+3. **`concrete/database_reference_extractor.py`** → `utils/entity_reference_extractor.py` (generalized)
+   - Text extraction with regex patterns (90% reusable)
+   - Can be generalized for any entity type, not just databases
+   - Core search capability for any workflow
+
+##### **ENHANCEMENT Components (Integrate)**
+1. **Visual Progress Rendering** → Enhance `utils/progress_tracker.py`
+   - Add terminal rendering to existing progress tracking
+   - ANSI color support and progress animations
+   - Complement existing progress data structures
+
+2. **MCP Client Management** → Enhance `clients/base.py`
+   - Add unified client initialization patterns
+   - Exponential backoff retry logic
+   - Connection pooling improvements
+
+3. **Workflow Builder Patterns** → Enhance `workflows/builder.py`
+   - Add domain-specific builder patterns
+   - Specialized workflow templates
+   - Entity-based workflow construction
+
+##### **DUPLICATE Components (Remove)**
+1. **`concrete/performance_optimization.py`** - Already exists in `utils/performance_optimization.py`
+2. **Unused imports** - Multiple files import unused modules
+3. **Unused parameters** - Function parameters passed but never used
+
+#### Existing Core Framework Structure
+```
+graphmcp/
+├── clients/                 # MCP client implementations
+│   ├── base.py             # Base client class (enhance with client management)
+│   ├── github.py           # GitHub client
+│   ├── slack.py            # Slack client
+│   └── ...
+├── workflows/               # Workflow orchestration
+│   ├── builder.py          # Workflow builder (enhance with specialized patterns)
+│   ├── context.py          # Workflow context
+│   └── ...
+├── utils/                   # Utilities (add unique components here)
+│   ├── progress_tracker.py # Progress tracking (enhance with rendering)
+│   ├── performance_optimization.py # Performance utils (already exists)
+│   └── ...
+├── graphmcp_logging/        # Logging system
+└── concrete/               # Clean up and restructure
+```
+
+#### Similar Refactoring Patterns
+- Previous component extractions in the codebase
+- Utility consolidation patterns
+- Import path migration strategies
+- Deprecation and cleanup patterns
 
 ### Acceptance Criteria
 
 #### Functional Criteria
-- [ ] All existing functionality works identically on Python 3.12
-- [ ] Development environment setup works with Python 3.12
-- [ ] All MCP clients connect and operate correctly on Python 3.12
-- [ ] All workflow executions complete successfully on Python 3.12
-- [ ] Streamlit UIs display and function correctly on Python 3.12
+- [ ] All unused files removed from concrete/ directory
+- [ ] 4 unique components moved to appropriate core locations
+- [ ] 3 core components enhanced with concrete improvements
+- [ ] All duplicate functionality removed
+- [ ] All import statements updated to use new locations
+- [ ] Database decommissioning workflow works identically
+- [ ] All make commands work unchanged
+- [ ] All tests pass without modification
 
 #### Technical Criteria
-- [ ] pyproject.toml specifies Python 3.12 as minimum version
-- [ ] All dependencies are updated to Python 3.12 compatible versions
-- [ ] All unit tests pass on Python 3.12
-- [ ] All integration tests pass on Python 3.12
-- [ ] All E2E tests pass on Python 3.12
-- [ ] CI/CD pipeline runs successfully with Python 3.12
-- [ ] Docker images build successfully with Python 3.12
+- [ ] Code reduction: ~1,400 lines removed
+- [ ] File structure: New components in appropriate core directories
+- [ ] Import statements: All references updated
+- [ ] Function signatures: All signatures preserved
+- [ ] Test coverage: 80% coverage maintained
+- [ ] Performance: No performance degradation
+- [ ] Documentation: All docs updated
 
 #### Quality Criteria
-- [ ] Code quality metrics remain at current levels or improve
-- [ ] Performance improves by 5-10% or shows no regression
-- [ ] Test coverage remains at 80% or higher
-- [ ] All linting and formatting checks pass
-- [ ] Documentation is updated to reflect Python 3.12 requirement
+- [ ] Code quality: All linting and formatting checks pass
+- [ ] Architecture: Clean separation of concerns
+- [ ] Maintainability: Improved code maintainability
+- [ ] Reusability: Components available for reuse
+- [ ] Clarity: Code purpose and usage clear
 
 ### Risk Assessment
 
 #### Technical Risks
-- **Dependency Incompatibility**: Some dependencies may not have Python 3.12 compatible versions
-- **Breaking Changes**: Python 3.12 may introduce subtle breaking changes affecting existing code
-- **Performance Regression**: Potential performance issues with new Python version
-- **Testing Gaps**: Insufficient testing may miss Python 3.12 specific issues
+- **Import dependency cycles**: Moving components may create circular imports
+- **Hidden dependencies**: Some dependencies may not be obvious from static analysis
+- **Test failures**: Tests may fail due to import path changes
+- **Functionality loss**: Critical functionality may be accidentally removed
 
 #### Business Risks
-- **Development Downtime**: Upgrade process may temporarily disrupt development
-- **Deployment Issues**: Production deployment may fail with Python 3.12
-- **User Impact**: Existing users may experience issues if not properly tested
-- **Timeline Risk**: Upgrade may take longer than expected
+- **Workflow disruption**: Database decommissioning workflow may break
+- **Development downtime**: Refactoring may temporarily disrupt development
+- **Regression introduction**: New bugs may be introduced during refactoring
+- **Timeline overrun**: Refactoring may take longer than expected
 
 #### Mitigation Strategies
-- **Comprehensive Testing**: Thorough testing in development and staging environments
-- **Phased Rollout**: Gradual rollout starting with development environments
-- **Fallback Plan**: Maintain ability to rollback to Python 3.11 if issues arise
-- **Dependency Audit**: Early audit of all dependencies for Python 3.12 compatibility
-- **Performance Monitoring**: Continuous monitoring of performance before and after upgrade
+- **Incremental approach**: Implement changes incrementally with validation
+- **Comprehensive testing**: Run full test suite after each change
+- **Backup strategy**: Create backup branch before starting refactoring
+- **Rollback plan**: Plan for quick rollback if issues arise
+- **Dependency analysis**: Thorough analysis of all dependencies before moving
+- **Import validation**: Validate all import paths after changes
+
+### Implementation Plan
+
+#### Phase 1: Preparation (Week 1)
+- [ ] Create feature branch for refactoring
+- [ ] Create comprehensive test baseline
+- [ ] Document all current import paths
+- [ ] Identify all dependencies and references
+- [ ] Create migration checklist
+
+#### Phase 2: Cleanup (Week 2)
+- [ ] Remove unused files (contextual_rules_engine.py, visual_renderer.py, pattern_discovery.py)
+- [ ] Remove unused imports and parameters
+- [ ] Remove unused functions and classes
+- [ ] Update tests to remove references to deleted code
+- [ ] Validate database decommissioning workflow still works
+
+#### Phase 3: Move Unique Components (Week 3)
+- [ ] Move source_type_classifier.py to utils/
+- [ ] Move file_decommission_processor.py to utils/file_processor.py (generalized)
+- [ ] Move database_reference_extractor.py to utils/entity_reference_extractor.py (generalized)
+- [ ] Update all import statements
+- [ ] Update all function calls
+- [ ] Run tests and validate functionality
+
+#### Phase 4: Enhance Core Components (Week 4)
+- [ ] Enhance utils/progress_tracker.py with visual rendering
+- [ ] Enhance clients/base.py with client management patterns
+- [ ] Enhance workflows/builder.py with specialized patterns
+- [ ] Update tests to cover enhanced functionality
+- [ ] Validate all enhancements work correctly
+
+#### Phase 5: Integration and Validation (Week 5)
+- [ ] Update all documentation
+- [ ] Update README.md and CLAUDE.md
+- [ ] Run comprehensive test suite
+- [ ] Validate database decommissioning workflow
+- [ ] Performance testing
+- [ ] Code quality checks
 
 ### Additional Context
 
 #### Research Findings
-- Python 3.12 introduces significant performance improvements through adaptive bytecode specialization
-- Enhanced error messages provide better debugging experience for async code
-- Improved type system with better generic type support benefits GraphMCP's type-heavy codebase
-- Most major Python packages already support Python 3.12
-- Python 3.12 is the current stable release with long-term support
+- **80% of concrete/ functionality is unused** by database decommissioning workflow
+- **88% of used functionality is generalizable** for broader framework use
+- **4 unique capabilities** don't exist in core framework
+- **3 enhancement opportunities** identified in core components
+- **1,400+ lines of code** can be safely removed
 
 #### Stakeholder Input
-- Development team: Excited about performance improvements and better error messages
-- DevOps team: Concerns about deployment complexity, but willing to support upgrade
-- QA team: Requests comprehensive testing strategy to ensure no regressions
-- Infrastructure team: Needs advance notice for environment preparation
+- **Development team**: Wants cleaner, more maintainable codebase
+- **Framework architects**: Wants better separation of concerns
+- **Workflow implementers**: Wants reusable components for new workflows
+- **Database decommissioning users**: Wants functionality preserved
 
 #### Alternative Approaches
-- **Stay on Python 3.11**: Minimal effort but misses performance and feature benefits
-- **Wait for Python 3.13**: Avoids being early adopter but delays benefits
-- **Gradual Migration**: Migrate components individually (complex due to shared dependencies)
-- **Dual Version Support**: Support both 3.11 and 3.12 (adds complexity and maintenance burden)
+- **Leave as-is**: Keep unused code (maintains current complexity)
+- **Gradual cleanup**: Clean up over time (slower improvement)
+- **Complete rewrite**: Start from scratch (too risky and time-consuming)
+- **Minimal cleanup**: Remove only obvious unused code (misses optimization opportunities)
+
+#### Expected Outcomes
+- **Cleaner codebase**: Reduced complexity and improved maintainability
+- **Better architecture**: Clear separation between core and specialized functionality
+- **Reusable components**: Components available for other workflows
+- **Improved performance**: Reduced memory usage and faster imports
+- **Better developer experience**: Easier to understand and modify code
 
 ---
 
@@ -243,78 +360,9 @@ No changes to data processing logic - existing async patterns and workflows unch
 
 After completing this template:
 
-1. **Research Phase**: Use `/research <feature_area>` to understand existing patterns
-2. **Example Analysis**: Use `/examples <pattern_type>` to find relevant patterns
-3. **PRP Creation**: Use `/prp <feature_name>` to create a comprehensive Product Requirements Prompt
-4. **Implementation**: Use `/implement PRPs/active/<feature_name>.md` to implement the feature
-5. **Validation**: Use `/validate <feature_name>` to validate the implementation
+1. **Research Phase**: Use `/research concrete_refactoring` to understand existing patterns
+2. **PRP Creation**: Use `/prp concrete_refactoring` to create a comprehensive Product Requirements Prompt
+3. **Implementation**: Use `/implement PRPs/active/concrete_refactoring.md` to execute the refactoring
+4. **Validation**: Use `/validate concrete_refactoring` to validate the implementation
 
-## Example Feature Request
-
-Here's an example of a well-structured feature request:
-
-### Basic Information
-- **Feature Name**: Redis Cache Integration
-- **Requested By**: Development Team
-- **Date**: 2024-01-15
-- **Priority**: Medium
-- **Estimated Complexity**: Medium
-
-### Feature Description
-
-#### What
-Add Redis caching support to the GraphMCP framework to improve performance of frequently accessed data such as MCP client configurations, workflow results, and repository analysis cache.
-
-#### Why
-Current workflow executions repeatedly fetch the same data from MCP servers, causing unnecessary latency and resource usage. Redis caching would:
-- Reduce MCP server load by 60-80%
-- Improve workflow execution time by 30-50%
-- Provide better user experience with faster response times
-- Enable offline development and testing scenarios
-
-#### When
-- **MVP**: End of Q1 2024
-- **Full Implementation**: End of Q2 2024
-- **Dependencies**: Redis server infrastructure setup
-
-#### Who
-- **Primary Users**: GraphMCP framework developers
-- **Secondary Users**: Workflow users (indirect benefit)
-- **Stakeholders**: DevOps team (infrastructure), QA team (testing)
-
-### Functional Requirements
-
-#### Core Functionality
-- Cache MCP client configurations with TTL
-- Cache workflow execution results
-- Cache repository analysis results
-- Provide cache invalidation mechanisms
-- Support distributed caching for multiple instances
-
-#### User Stories
-- As a developer, I want workflow results to be cached so that repeated executions are faster
-- As a developer, I want MCP configurations to be cached so that client initialization is faster
-- As a workflow user, I want faster response times so that I can iterate more quickly
-- As a DevOps engineer, I want cache monitoring so that I can track performance improvements
-
-#### Success Criteria
-- Workflow execution time reduced by 30% for cached scenarios
-- MCP client initialization time reduced by 50%
-- Cache hit rate above 70% for typical usage patterns
-- No functional regressions in existing workflows
-
-### Technical Requirements
-
-#### Architecture Integration
-- **Framework Component**: New `cache/` module with Redis client
-- **MCP Clients**: Add caching layer to all MCP clients
-- **Workflow Integration**: Cache workflow step results
-- **Dependencies**: Redis server, redis-py library
-
-#### Performance Requirements
-- **Response Time**: Cache operations < 10ms
-- **Throughput**: Support 1000+ cache operations per second
-- **Scalability**: Support cluster deployment
-- **Resource Usage**: < 100MB memory overhead
-
-This example shows the level of detail and specificity that leads to successful context engineering implementations.
+This refactoring will transform the GraphMCP framework from a database-specific solution into a general-purpose entity processing framework while significantly improving code quality and maintainability.

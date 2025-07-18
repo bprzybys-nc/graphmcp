@@ -21,7 +21,8 @@
       "mcp__jetbrains__list_directory_tree_in_folder",
       "WebFetch(domain:github.com)",
       "Bash(mkdir:*)",
-      "Bash(make test-unit:*)"
+      "Bash(make test-unit:*)",
+      "Bash(git log:*)"
     ],
     "deny": []
   }
