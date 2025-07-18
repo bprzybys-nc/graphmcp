@@ -48,6 +48,7 @@ help: ## Show this help message
 	@echo "  make test-unit     - Unit tests"
 	@echo "  make test-integration - Integration tests"
 	@echo "  make test-e2e      - End-to-end tests"
+	@echo "  make test-concrete - Concrete implementation tests"
 	@echo ""
 	@echo "$(GREEN)🎯 Demo:$(NC)"
 	@echo "  make demo-mock     - Fast demo with cached data (~30s)"
@@ -193,7 +194,28 @@ test-logging: check-deps ## Run structured logging system tests
 		--tb=short
 	@echo "$(GREEN)✓ Structured logging tests completed$(NC)"
 
-test-all: test-unit test-integration test-e2e ## Run all test suites
+test-concrete: check-deps ## Run concrete implementation tests
+	@echo "$(YELLOW)Running concrete implementation tests...$(NC)"
+	PYTHONPATH=. $(VENV_PATH)/bin/pytest concrete/*/tests/ \
+		--verbose \
+		--tb=short
+	@echo "$(GREEN)✓ Concrete tests completed$(NC)"
+
+test-concrete-unit: check-deps ## Run concrete unit tests
+	@echo "$(YELLOW)Running concrete unit tests...$(NC)"
+	PYTHONPATH=. $(VENV_PATH)/bin/pytest concrete/*/tests/unit/ \
+		--verbose \
+		--tb=short
+	@echo "$(GREEN)✓ Concrete unit tests completed$(NC)"
+
+test-concrete-integration: check-deps ## Run concrete integration tests
+	@echo "$(YELLOW)Running concrete integration tests...$(NC)"
+	PYTHONPATH=. $(VENV_PATH)/bin/pytest concrete/*/tests/integration/ \
+		--verbose \
+		--tb=short
+	@echo "$(GREEN)✓ Concrete integration tests completed$(NC)"
+
+test-all: test-unit test-integration test-e2e test-concrete ## Run all test suites
 	@echo "$(GREEN)✓ All tests completed$(NC)"
 
 # =============================================================================
