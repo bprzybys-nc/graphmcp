@@ -10,7 +10,12 @@ and reusability across different workflow contexts.
 from .config import MCPConfigManager
 
 # Session and connection management
-from .session import MCPSessionManager, ensure_serializable, execute_context7_search, execute_github_analysis
+from .session import (
+    MCPSessionManager,
+    ensure_serializable,
+    execute_context7_search,
+    execute_github_analysis,
+)
 
 # Retry handling
 from .retry import MCPRetryHandler, TimedRetryHandler, retry_with_exponential_backoff
@@ -38,7 +43,12 @@ from .data_models import (
 # Extracted utilities from concrete implementations
 from .parameter_service import get_parameter_service, ParameterService
 from .monitoring import get_monitoring_system, MonitoringSystem
-from .progress_tracker import ProgressFrame, WorkflowProgress, ProgressTracker, create_progress_tracker
+from .progress_tracker import (
+    ProgressFrame,
+    WorkflowProgress,
+    ProgressTracker,
+    create_progress_tracker,
+)
 from .performance_optimization import (
     CacheStrategy,
     CacheEntry,
@@ -55,28 +65,41 @@ from .performance_optimization import (
 )
 from .error_handling import get_error_handler, ErrorHandler
 
+# Refactored utilities from concrete module
+from .source_type_classifier import (
+    SourceTypeClassifier,
+    SourceType,
+    ClassificationResult,
+)
+from .file_processor import (
+    FileProcessor,
+    ProcessingStrategy,
+    ProcessingResult,
+    FileDecommissionProcessor,
+)
+from .entity_reference_extractor import (
+    EntityReferenceExtractor,
+    DatabaseReferenceExtractor,
+)
+
 __all__ = [
     # Configuration
     "MCPConfigManager",
-    
     # Session management
     "MCPSessionManager",
     "ensure_serializable",
     "execute_github_analysis",
     "execute_context7_search",
-    
     # Retry handling
     "MCPRetryHandler",
     "TimedRetryHandler",
     "retry_with_exponential_backoff",
-    
     # Exceptions
     "MCPUtilityError",
-    "MCPSessionError", 
+    "MCPSessionError",
     "MCPConfigError",
     "MCPRetryError",
     "MCPToolError",
-    
     # Data models
     "GitHubSearchResult",
     "Context7Documentation",
@@ -85,11 +108,10 @@ __all__ = [
     "MCPSession",
     "MCPServerConfig",
     "MCPConfigStatus",
-    
     # Extracted utilities
     "get_parameter_service",
     "ParameterService",
-    "get_monitoring_system", 
+    "get_monitoring_system",
     "MonitoringSystem",
     "ProgressFrame",
     "WorkflowProgress",
@@ -109,4 +131,10 @@ __all__ = [
     "rate_limited",
     "get_error_handler",
     "ErrorHandler",
+    # Refactored utilities
+    "SourceTypeClassifier",
+    "FileTypeStrategy",
+    "FileProcessor",
+    "FileProcessingStrategy",
+    "EntityReferenceExtractor",
 ]

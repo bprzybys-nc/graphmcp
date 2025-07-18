@@ -14,9 +14,11 @@ import time
 from dataclasses import dataclass
 from typing import Any
 
+
 @dataclass
 class MCPToolCall:
     """Record of an MCP tool call for debugging and monitoring."""
+
     server_name: str
     tool_name: str
     parameters: dict
@@ -30,14 +32,16 @@ class MCPToolCall:
         if self.timestamp is None:
             self.timestamp = time.time()
 
+
 @dataclass
 class MCPSession:
     """Represents an active MCP server session for type hinting and state tracking.
-    
+
     WARNING: This is NOT the actual mcp_use session object.
     This dataclass represents the *concept* of the session for type hinting
     and internal state tracking within utilities.
     """
+
     server_name: str
     session_id: str
     config_path: str
@@ -62,17 +66,19 @@ class MCPSession:
         """Custom pickling to exclude non-serializable references."""
         state = self.__dict__.copy()
         # Remove non-serializable internal references
-        state['_session_ref'] = None
-        state['_client_ref'] = None
+        state["_session_ref"] = None
+        state["_client_ref"] = None
         return state
 
     def __setstate__(self, state):
         """Custom unpickling to restore state."""
         self.__dict__.update(state)
 
+
 @dataclass
 class MCPServerConfig:
     """Configuration for a single MCP server."""
+
     name: str
     command: str
     args: list[str]
@@ -82,18 +88,16 @@ class MCPServerConfig:
 
     def to_dict(self) -> dict[str, Any]:
         """Convert to dictionary format for mcp_use configuration."""
-        config = {
-            "command": self.command,
-            "args": self.args,
-            "env": self.env
-        }
+        config = {"command": self.command, "args": self.args, "env": self.env}
         if self.url:
             config["url"] = self.url
         return config
 
-@dataclass  
+
+@dataclass
 class WorkflowResult:
     """Result from a GraphMCP workflow execution."""
+
     workflow_id: str
     steps_completed: int
     total_steps: int

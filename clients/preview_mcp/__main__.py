@@ -19,21 +19,21 @@ async def main():
     # Configure logging
     logging.basicConfig(
         level=logging.INFO,
-        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     )
-    
+
     logger.info("Starting Preview MCP Server...")
-    
+
     try:
         # Create workflow executor
         executor = GraphMCPWorkflowExecutor()
-        
+
         # Create and run MCP server
         server = MCPWorkflowServer(executor, log_level="INFO")
-        
+
         logger.info("Preview MCP Server started successfully on stdio")
         await server.run("stdio")
-        
+
     except KeyboardInterrupt:
         logger.info("Server shutdown requested")
     except Exception as e:
@@ -42,4 +42,4 @@ async def main():
 
 
 if __name__ == "__main__":
-    asyncio.run(main()) 
+    asyncio.run(main())
