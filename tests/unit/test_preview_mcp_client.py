@@ -4,11 +4,10 @@ Unit tests for Preview MCP Client integration.
 
 import pytest
 import asyncio
-from unittest.mock import Mock, patch, AsyncMock
-from pathlib import Path
+from unittest.mock import Mock, patch
 
 from clients.preview_mcp import PreviewMCPClient, GraphMCPWorkflowExecutor
-from clients.preview_mcp.context import WorkflowContext, WorkflowStep, WorkflowStatus
+from clients.preview_mcp.context import WorkflowContext
 
 
 class TestGraphMCPWorkflowExecutor:

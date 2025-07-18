@@ -17,11 +17,10 @@ Options:
 
 import sys
 import os
-import asyncio
 import time
 import subprocess
 from pathlib import Path
-from typing import Dict, List, Any
+from typing import Dict, List
 import argparse
 
 # Add project root to path
@@ -242,7 +241,7 @@ class IntegrationTestRunner:
         print("📊 INTEGRATION TEST RESULTS")
         print("=" * 60)
         
-        print(f"📈 Summary:")
+        print("📈 Summary:")
         print(f"   • Total Tests Run: {total_tests}")
         print(f"   • Passed: {self.results['passed']}")
         print(f"   • Failed: {self.results['failed']}")
@@ -250,12 +249,12 @@ class IntegrationTestRunner:
         print(f"   • Total Duration: {total_duration:.2f}s")
         
         if self.results["performance_metrics"]:
-            print(f"\n⏱️  Performance Breakdown:")
+            print("\n⏱️  Performance Breakdown:")
             for test_name, duration in self.results["performance_metrics"].items():
                 print(f"   • {test_name}: {duration:.2f}s")
         
         if self.results["errors"]:
-            print(f"\n❌ Failed Tests:")
+            print("\n❌ Failed Tests:")
             for error in self.results["errors"]:
                 if isinstance(error, dict):
                     print(f"   • {error.get('test', 'Unknown')}: {error.get('error', 'Unknown error')}")
@@ -298,7 +297,7 @@ class IntegrationTestRunner:
             )
         
         if recommendations:
-            print(f"\n💡 Recommendations:")
+            print("\n💡 Recommendations:")
             for rec in recommendations:
                 print(f"   • {rec}")
 

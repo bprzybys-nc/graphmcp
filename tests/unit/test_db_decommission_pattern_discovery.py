@@ -12,11 +12,8 @@ Tests the pattern_discovery module with:
 """
 
 import pytest
-import asyncio
 import json
-from unittest.mock import MagicMock, AsyncMock, patch, call
-from typing import Dict, List, Any, Optional
-from collections import defaultdict
+from unittest.mock import MagicMock, AsyncMock, patch
 
 from concrete.db_decommission.pattern_discovery import (
     AgenticFileProcessor,
@@ -28,7 +25,7 @@ from concrete.db_decommission.pattern_discovery import (
     generate_pattern_discovery_summary
 )
 from concrete.db_decommission.data_models import FileProcessingResult
-from concrete.source_type_classifier import SourceType, SourceTypeClassifier
+from concrete.source_type_classifier import SourceType
 
 
 class TestAgenticFileProcessor:

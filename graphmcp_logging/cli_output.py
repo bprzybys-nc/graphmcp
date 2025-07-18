@@ -163,7 +163,6 @@ class CLIOutputHandler:
         Returns:
             LoggingConfig: Environment-aware configuration
         """
-        import os
         
         # Check for CLI context indicators
         if '--output-format' in sys.argv:

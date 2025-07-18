@@ -20,7 +20,8 @@
       "mcp__jetbrains__search_in_files_content",
       "mcp__jetbrains__list_directory_tree_in_folder",
       "WebFetch(domain:github.com)",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "Bash(make test-unit:*)"
     ],
     "deny": []
   }

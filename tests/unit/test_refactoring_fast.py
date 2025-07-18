@@ -14,7 +14,7 @@ Test Strategy:
 """
 
 import pytest
-from typing import Dict, List, Any, Tuple
+from typing import Dict, List, Any
 from dataclasses import dataclass
 import re
 

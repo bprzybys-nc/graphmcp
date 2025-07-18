@@ -9,9 +9,6 @@ graceful degradation when servers are unavailable.
 import pytest
 import os
 import asyncio
-from unittest.mock import patch
-import json
-import tempfile
 import time
 from pathlib import Path
 from dotenv import load_dotenv
@@ -20,12 +17,10 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from workflows import WorkflowBuilder
-from concrete.db_decommission import create_db_decommission_workflow
 from clients import (
     RepomixMCPClient, 
     GitHubMCPClient, 
-    FilesystemMCPClient, 
-    SlackMCPClient
+    FilesystemMCPClient
 )
 
 # --- Async Helper Functions ---
@@ -224,7 +219,7 @@ class TestRealIntegration:
                     "microsoft", "typescript", "README.md"
                 )
                 assert "TypeScript" in file_content_result or "typescript" in file_content_result.lower()
-                print(f"✅ Successfully retrieved README.md content for microsoft/typescript")
+                print("✅ Successfully retrieved README.md content for microsoft/typescript")
 
             finally:
                 await github_client.close()

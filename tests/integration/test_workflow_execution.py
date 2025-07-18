@@ -3,11 +3,9 @@ import asyncio
 import time
 import os
 import json
-from pathlib import Path
-from unittest.mock import AsyncMock, patch, MagicMock
+from unittest.mock import AsyncMock, patch
 
 from workflows import WorkflowBuilder
-from clients import GitHubMCPClient, SlackMCPClient, RepomixMCPClient
 
 # Helper function for test workflow steps
 async def merge_analysis_results(context, step):

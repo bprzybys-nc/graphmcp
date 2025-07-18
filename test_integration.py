@@ -5,9 +5,7 @@ Tests the complete workflow from builder creation to execution.
 """
 
 import sys
-import os
 import asyncio
-import time
 from pathlib import Path
 
 # Add the current directory to the path
@@ -17,7 +15,6 @@ async def mock_workflow_execution_test():
     """Integration test for complete workflow creation and execution."""
     print("Testing complete workflow creation and execution...")
     
-    from workflows.builder import WorkflowBuilder, WorkflowStep, StepType
     from concrete.db_decommission.utils import DatabaseDecommissionWorkflowBuilder
     
     # Test 1: Create workflow with step_auto

@@ -7,7 +7,7 @@ Provides comprehensive GitHub repository management through MCP tools.
 
 import logging
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 from .base import BaseMCPClient, MCPToolError
 from utils import ensure_serializable
 

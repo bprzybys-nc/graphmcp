@@ -9,12 +9,11 @@ This module provides a structured logging system that supports three types of ap
 
 from __future__ import annotations
 
-import json
 import time
 from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional
 import plotly.graph_objects as go
 import plotly.io as pio
 

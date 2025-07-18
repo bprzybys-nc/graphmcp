@@ -7,11 +7,11 @@ in the GraphMCP framework using the fluent builder API.
 
 import asyncio
 import logging
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict
 
 from workflows.builder import WorkflowBuilder
 from workflows.context import WorkflowContext
-from graphmcp_logging import get_logger, LoggingConfig
+from graphmcp_logging import get_logger
 
 logger = logging.getLogger(__name__)
 

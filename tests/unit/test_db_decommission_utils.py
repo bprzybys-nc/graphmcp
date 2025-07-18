@@ -12,11 +12,7 @@ Tests the utils module with:
 """
 
 import pytest
-import asyncio
-import json
-import time
-from unittest.mock import MagicMock, AsyncMock, patch, mock_open, call
-from typing import Dict, List, Any, Optional
+from unittest.mock import MagicMock, AsyncMock, patch, mock_open
 
 from concrete.db_decommission.utils import (
     create_db_decommission_workflow,

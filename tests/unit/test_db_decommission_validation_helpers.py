@@ -11,10 +11,7 @@ Tests the validation_helpers module with:
 """
 
 import pytest
-import asyncio
-import time
-from unittest.mock import MagicMock, AsyncMock, patch, call
-from typing import Dict, List, Any, Optional
+from unittest.mock import MagicMock, patch
 
 from concrete.db_decommission.validation_helpers import (
     validate_environment_step,
@@ -23,7 +20,6 @@ from concrete.db_decommission.validation_helpers import (
     perform_service_integrity_check,
     generate_recommendations
 )
-from concrete.db_decommission.data_models import ValidationResult
 
 
 class TestValidateEnvironmentStep:

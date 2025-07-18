@@ -47,7 +47,7 @@ class BaseMCPClient(ABC):
         """
         if self.SERVER_NAME is None:
             raise NotImplementedError(
-                f"Subclasses of BaseMCPClient must define a SERVER_NAME class attribute."
+                "Subclasses of BaseMCPClient must define a SERVER_NAME class attribute."
             )
 
         self.config_path = Path(config_path)

@@ -1,5 +1,4 @@
 import pytest
-import asyncio
 import gc
 from unittest.mock import patch, AsyncMock
 
@@ -10,7 +9,6 @@ except ImportError:
     psutil = None
 
 from workflows import WorkflowBuilder
-from clients import GitHubMCPClient
 
 
 @pytest.mark.skipif(psutil is None, reason="psutil library not found, skipping resource tests")

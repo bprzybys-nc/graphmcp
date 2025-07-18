@@ -7,7 +7,7 @@ and maps them to appropriate rule sets for database decommissioning workflows.
 
 import re
 from pathlib import Path
-from typing import Dict, List, Set, Tuple, Optional
+from typing import Dict, List, Tuple, Optional
 from dataclasses import dataclass
 from enum import Enum
 

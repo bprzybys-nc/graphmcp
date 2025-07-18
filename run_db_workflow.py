@@ -45,7 +45,7 @@ async def main():
         elif tests_repo_pack_path.exists():
             print(f"✅ Using cached mock repo pack: {tests_repo_pack_path}")
         else:
-            print(f"⚠️  Mock data not found, falling back to real data")
+            print("⚠️  Mock data not found, falling back to real data")
             args.mock = False
     
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')

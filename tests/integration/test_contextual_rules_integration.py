@@ -16,14 +16,10 @@ Test Coverage:
 """
 
 import pytest
-import asyncio
-from typing import Dict, List, Any, Tuple
-from pathlib import Path
-import tempfile
-import os
+from typing import List
 
 # Import the real components
-from concrete.contextual_rules_engine import ContextualRulesEngine, create_contextual_rules_engine, RuleResult, FileProcessingResult
+from concrete.contextual_rules_engine import create_contextual_rules_engine, FileProcessingResult
 from concrete.source_type_classifier import SourceTypeClassifier, SourceType, ClassificationResult
 
 

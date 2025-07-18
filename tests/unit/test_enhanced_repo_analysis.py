@@ -11,13 +11,12 @@ Tests use real repository data to validate enhanced components.
 """
 
 import pytest
-import asyncio
 from typing import Dict, Any, List
-from unittest.mock import Mock, AsyncMock, patch
+from unittest.mock import Mock, AsyncMock
 
-from concrete.pattern_discovery import PatternDiscoveryEngine, discover_patterns_step
+from concrete.pattern_discovery import PatternDiscoveryEngine
 from concrete.source_type_classifier import SourceTypeClassifier, SourceType, ClassificationResult
-from concrete.contextual_rules_engine import ContextualRulesEngine, RuleResult, FileProcessingResult
+from concrete.contextual_rules_engine import ContextualRulesEngine
 
 
 class TestEnhancedRepositoryAnalysis:
@@ -195,7 +194,7 @@ class TestEnhancedRepositoryAnalysis:
         passed = sum(1 for r in results.values() if r["passed"])
         total = len(results)
         
-        print(f"✅ File Classification Test:")
+        print("✅ File Classification Test:")
         print(f"   Passed: {passed}/{total} ({passed/total*100:.1f}%)")
         
         for file_path, result in results.items():

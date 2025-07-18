@@ -2,9 +2,8 @@
 File Decommission Processor - Essential Implementation
 """
 
-import re
 from pathlib import Path
-from typing import Dict, List, Any
+from typing import Dict, Any
 from datetime import datetime
 
 class FileDecommissionProcessor:
@@ -129,7 +128,7 @@ def connect_to_{db_name}():
     )
 
 '''
-        return header + exception_code + f"\n# Original code:\n# " + content.replace('\n', '\n# ')
+        return header + exception_code + "\n# Original code:\n# " + content.replace('\n', '\n# ')
     
     def _process_documentation(self, content: str, db_name: str, header: str) -> str:
         """Add decommission notice to documentation."""

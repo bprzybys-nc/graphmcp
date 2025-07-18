@@ -9,9 +9,7 @@ Tests for:
 """
 
 import pytest
-import asyncio
-from unittest.mock import Mock, AsyncMock, patch
-from typing import Dict, Any, List
+from unittest.mock import Mock, AsyncMock
 
 from concrete.pattern_discovery import PatternDiscoveryEngine, discover_patterns_step
 from concrete.source_type_classifier import SourceTypeClassifier, SourceType, ClassificationResult

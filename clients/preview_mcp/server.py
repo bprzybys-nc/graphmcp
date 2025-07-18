@@ -1,11 +1,10 @@
 """MCP Server implementation with workflow orchestration."""
 
-import asyncio
 import json
-from typing import Dict, Any, List, Optional, AsyncGenerator, Protocol
+from typing import Dict, Any, List, Protocol
 from datetime import datetime
 
-from mcp import server, types
+from mcp import types
 from mcp.server import Server
 from mcp.server.models import InitializationOptions
 
@@ -141,7 +140,7 @@ class MCPWorkflowServer:
                 resources.append(types.Resource(
                     uri=f"workflow://{workflow_id}",
                     name=f"Workflow {workflow_id}",
-                    description=f"Workflow execution context and logs",
+                    description="Workflow execution context and logs",
                     mimeType="application/json"
                 ))
             

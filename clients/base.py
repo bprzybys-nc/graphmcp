@@ -10,9 +10,7 @@ import json
 import logging
 from abc import ABC, abstractmethod
 from pathlib import Path
-from typing import Any, Dict, Optional
-import subprocess
-import tempfile
+from typing import Any, Dict
 import os
 from dotenv import load_dotenv
 

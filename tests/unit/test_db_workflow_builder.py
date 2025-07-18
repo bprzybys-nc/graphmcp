@@ -6,15 +6,11 @@ and backward compatibility with existing create_db_decommission_workflow() funct
 """
 
 import pytest
-import asyncio
-import json
 import pickle
-import time
-from unittest.mock import AsyncMock, patch, MagicMock
-from pathlib import Path
+from unittest.mock import patch
 
 from workflows import WorkflowBuilder, Workflow
-from workflows.builder import WorkflowStep, StepType, WorkflowResult
+from workflows.builder import StepType
 from concrete.db_decommission.utils import (
     DatabaseDecommissionWorkflowBuilder,
     create_db_decommission_workflow,

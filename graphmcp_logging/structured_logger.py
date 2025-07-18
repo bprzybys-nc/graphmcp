@@ -10,8 +10,7 @@ import sys
 import time
 import logging
 import logging.handlers
-from datetime import datetime
-from typing import Dict, Any, Optional, TextIO
+from typing import Dict, Any
 
 from .data_models import LogEntry, StructuredData, ProgressEntry
 from .config import LoggingConfig

@@ -6,10 +6,8 @@ and mock/real mode functionality.
 """
 
 import pytest
-import asyncio
 import os
 from unittest.mock import Mock, patch, AsyncMock
-from pathlib import Path
 
 from demo.runner import (
     run_demo_workflow, 
@@ -21,7 +19,6 @@ from demo.runner import (
     generate_refactoring_plan_step
 )
 from demo.config import DemoConfig
-from demo.cache import DemoCache
 
 
 class TestDemoConfig:

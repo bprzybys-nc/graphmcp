@@ -11,9 +11,8 @@ This service:
 
 import os
 import json
-import re
 import logging
-from typing import Dict, Any, Optional, List, Set
+from typing import Dict, Any, Optional, List
 from pathlib import Path
 from dataclasses import dataclass
 from enum import Enum

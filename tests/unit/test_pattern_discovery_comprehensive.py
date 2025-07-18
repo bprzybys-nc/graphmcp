@@ -11,8 +11,6 @@ Tests core functionality to improve coverage:
 
 import pytest
 from unittest.mock import AsyncMock, MagicMock, patch
-import re
-from pathlib import Path
 
 from concrete.pattern_discovery import PatternDiscoveryEngine, discover_patterns_step
 from concrete.source_type_classifier import SourceType

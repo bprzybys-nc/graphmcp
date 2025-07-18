@@ -12,12 +12,8 @@ This test suite covers:
 import pytest
 import asyncio
 import time
-import os
-import io
-from unittest.mock import MagicMock, AsyncMock, patch, call
-from pathlib import Path
-from datetime import datetime, timedelta
-import logging
+from unittest.mock import MagicMock, AsyncMock, patch
+from datetime import datetime
 import aiohttp
 import pickle
 

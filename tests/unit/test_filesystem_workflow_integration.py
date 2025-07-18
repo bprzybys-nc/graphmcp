@@ -6,10 +6,9 @@ with proper mocking for unused functionality.
 """
 
 import pytest
-import asyncio
 import tempfile
 from pathlib import Path
-from unittest.mock import AsyncMock, patch, MagicMock
+from unittest.mock import AsyncMock, patch
 
 from clients import FilesystemMCPClient
 from clients.filesystem import FilesystemScanResult

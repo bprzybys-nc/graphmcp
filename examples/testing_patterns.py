@@ -13,7 +13,6 @@ Key patterns to follow:
 import pytest
 import asyncio
 import json
-from unittest.mock import Mock, patch, AsyncMock
 from pathlib import Path
 
 # Test markers commonly used in GraphMCP
@@ -86,7 +85,7 @@ class TestMCPClient:
     @pytest.mark.integration
     async def test_tool_retry_mechanism(self, mock_config):
         """Test that tool retry works with exponential backoff."""
-        from examples.mcp_base_client import BaseMCPClient, MCPToolError
+        from examples.mcp_base_client import BaseMCPClient
         
         class TestClient(BaseMCPClient):
             SERVER_NAME = "test_server"

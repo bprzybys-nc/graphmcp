@@ -18,11 +18,8 @@ Test structure:
 """
 
 import pytest
-import os
-import json
-import tempfile
 from pathlib import Path
-from typing import Dict, List, Any, Optional
+from typing import Dict, List, Any
 
 # Import the actual components we're testing (no enhanced prefix)
 from concrete.pattern_discovery import PatternDiscoveryEngine
@@ -555,7 +552,7 @@ class TestRepositoryAnalysisE2E:
     
     def _validate_file_type_distribution(self, discovery_result: Dict[str, Any], test_case: RepositoryAnalysisTestCase):
         """Validate that the discovered file types match expectations."""
-        print(f"📁 Validating file type distribution...")
+        print("📁 Validating file type distribution...")
         
         matches_by_type = discovery_result["matches_by_type"]
         
@@ -592,7 +589,7 @@ class TestRepositoryAnalysisE2E:
     
     def _test_file_classification_on_real_content(self, discovery_result: Dict[str, Any], test_case: RepositoryAnalysisTestCase):
         """Test source type classification on real file content."""
-        print(f"🔬 Testing file classification on real content...")
+        print("🔬 Testing file classification on real content...")
         
         matching_files = discovery_result["matching_files"]
         

@@ -5,9 +5,6 @@ This bypasses the circular import issue by testing the core functionality direct
 """
 
 import sys
-import os
-import time
-import asyncio
 from pathlib import Path
 
 # Add the current directory to the path to allow imports
@@ -23,7 +20,7 @@ def test_step_auto_basic():
     print("Testing step_auto() method...")
     
     # Direct import to avoid circular dependencies
-    from workflows.builder import WorkflowBuilder, WorkflowStep, StepType
+    from workflows.builder import WorkflowBuilder, StepType
     
     # Test 1: Basic step_auto functionality
     builder = WorkflowBuilder("test-workflow", "test_config.json")
@@ -45,7 +42,7 @@ def test_step_auto_basic():
     assert step.id == "test_step", f"Expected step id 'test_step', got {step.id}"
     assert step.name == "Test Step", f"Expected step name 'Test Step', got {step.name}"
     assert step.step_type == StepType.CUSTOM, f"Expected CUSTOM step type, got {step.step_type}"
-    assert step.parameters["test_param"] == "test_value", f"Expected test_param 'test_value'"
+    assert step.parameters["test_param"] == "test_value", "Expected test_param 'test_value'"
     assert step.timeout_seconds == 45, f"Expected timeout 45, got {step.timeout_seconds}"
     assert callable(step.custom_function), "step.custom_function should be callable"
     
@@ -61,10 +58,10 @@ def test_database_workflow_builder():
     # Test 1: Basic initialization
     builder = DatabaseDecommissionWorkflowBuilder("test_database")
     
-    assert builder.database_name == "test_database", f"Expected database_name 'test_database'"
-    assert builder.slack_channel == "demo-channel", f"Expected slack_channel 'demo-channel'"
-    assert builder.target_repos == [], f"Expected empty target_repos list"
-    assert builder.workflow_id.startswith("db-test_database-"), f"Expected workflow_id to start with 'db-test_database-'"
+    assert builder.database_name == "test_database", "Expected database_name 'test_database'"
+    assert builder.slack_channel == "demo-channel", "Expected slack_channel 'demo-channel'"
+    assert builder.target_repos == [], "Expected empty target_repos list"
+    assert builder.workflow_id.startswith("db-test_database-"), "Expected workflow_id to start with 'db-test_database-'"
     
     # Test 2: Method chaining
     result = builder.with_repositories(["https://github.com/test/repo1", "https://github.com/test/repo2"])

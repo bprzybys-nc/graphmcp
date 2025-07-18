@@ -9,7 +9,7 @@ import asyncio
 import traceback
 import time
 import logging
-from typing import Dict, List, Any, Optional, Callable, Union
+from typing import Dict, Any, Optional, Callable
 from dataclasses import dataclass, asdict
 from datetime import datetime
 from pathlib import Path

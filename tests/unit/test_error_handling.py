@@ -126,7 +126,7 @@ class TestErrorContext:
             repository_url="http://repo.com"
         )
         
-        assert error_context.error_id == f"err_test_uuid"
+        assert error_context.error_id == "err_test_uuid"
         assert error_context.timestamp == datetime(2023, 3, 15, 0, 0, 0)
         assert error_context.severity == ErrorSeverity.HIGH
         assert error_context.category == ErrorCategory.BUSINESS_LOGIC
@@ -431,7 +431,7 @@ class TestErrorHandler:
         mock_alert_callback.assert_called_once_with(error_context_obj)
         # Expect critical for the error itself, and an error for the alert failure
         mock_logger.critical.assert_any_call(f"[{error_context_obj.error_id}] Cannot connect") # Use assert_any_call for flexibility
-        mock_logger.error.assert_called_once_with(f"Failed to send error alert: Alert failed to send")
+        mock_logger.error.assert_called_once_with("Failed to send error alert: Alert failed to send")
 
     @pytest.mark.asyncio
     async def test_execute_with_error_handling_no_strategy(self, error_handler):
@@ -462,7 +462,7 @@ class TestErrorHandler:
         
         # Expected warning calls from retries (adjusted to match actual backoff factor of 2.0)
         expected_warning_calls = [
-            call(f"Attempt 1 failed, retrying in 1.0s: First try failed")
+            call("Attempt 1 failed, retrying in 1.0s: First try failed")
         ]
         mock_logger.warning.assert_has_calls(expected_warning_calls, any_order=True) # Check logging from the recovery strategy
         mock_logger.error.assert_not_called()
@@ -563,7 +563,7 @@ class TestErrorHandler:
         with pytest.raises(IOError): # Expect the error to be re-raised
             await error_handler.export_error_report("/no/such/path/report.json")
         
-        mock_logger.error.assert_called_once_with(f"Failed to export error report: Permission denied")
+        mock_logger.error.assert_called_once_with("Failed to export error report: Permission denied")
         assert len(error_handler.error_history) == 1 # History should not be cleared on failure
 
 class TestGlobalFunctions:
@@ -619,7 +619,7 @@ class TestHandleErrorsDecorator:
 
         mock_logger.error.assert_any_call(f"[{error_context.error_id}] Failed to connect") # Initial error
         # Expected warning from retry
-        mock_logger.warning.assert_called_once_with(f"Attempt 1 failed, retrying in 1.0s: Failed to connect")
+        mock_logger.warning.assert_called_once_with("Attempt 1 failed, retrying in 1.0s: Failed to connect")
         mock_logger.debug.assert_called_once() # Debug log for full context
 
     @pytest.mark.asyncio
@@ -645,7 +645,7 @@ class TestHandleErrorsDecorator:
         
         # Check logging from the recovery strategy (warning for retry)
         expected_warning_calls = [
-            call(f"Attempt 1 failed, retrying in 1.0s: First try failed")
+            call("Attempt 1 failed, retrying in 1.0s: First try failed")
         ]
         mock_logger.warning.assert_has_calls(expected_warning_calls, any_order=True) # Check logging from the recovery strategy
         mock_logger.error.assert_not_called() 

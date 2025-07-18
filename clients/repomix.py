@@ -8,9 +8,9 @@ through repository packaging and analysis tools.
 
 import logging
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 from utils import ensure_serializable
-from .base import BaseMCPClient, MCPToolError
+from .base import BaseMCPClient
 
 logger = logging.getLogger(__name__)
 

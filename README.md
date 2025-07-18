@@ -33,6 +33,11 @@ GraphMCP provides a unified interface for managing and coordinating multiple MCP
 - **Workflow Context**: Step-by-step execution tracking
 - **Live Console Output**: Stream workflow progress to browser
 
+## Requirements
+
+- Python 3.12 or higher
+- uv package manager (automatically installed by `make setup`)
+
 ## Quick Start
 
 ### Setup

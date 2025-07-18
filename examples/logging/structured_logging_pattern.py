@@ -7,10 +7,8 @@ in the GraphMCP framework.
 
 import asyncio
 import logging
-from typing import Any, Dict, List, Optional
 
 from graphmcp_logging import get_logger, LoggingConfig
-from graphmcp_logging.formatters import JSONFormatter, ConsoleFormatter
 
 # Standard logging setup
 logger = logging.getLogger(__name__)
@@ -94,10 +92,10 @@ async def step_logging_example():
         await asyncio.sleep(0.1)
         
         # Log step progress
-        logger_instance.log_info(f"🔍 **Analyzing repository structure**")
-        logger_instance.log_info(f"- Found 15 Python files")
-        logger_instance.log_info(f"- Found 8 configuration files")
-        logger_instance.log_info(f"- Found 3 documentation files")
+        logger_instance.log_info("🔍 **Analyzing repository structure**")
+        logger_instance.log_info("- Found 15 Python files")
+        logger_instance.log_info("- Found 8 configuration files")
+        logger_instance.log_info("- Found 3 documentation files")
         
         # Log step completion
         result = {

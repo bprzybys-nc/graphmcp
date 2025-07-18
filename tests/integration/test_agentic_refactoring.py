@@ -8,20 +8,16 @@ Tests the complete agentic refactoring flow:
 4. Success criteria validation
 """
 
-import asyncio
 import json
-import os
 import pytest
 import tempfile
 import subprocess
-from typing import Dict, List, Any
+from typing import Dict
 from unittest.mock import Mock, AsyncMock, patch
-from dataclasses import dataclass
 from pathlib import Path
 
 from concrete.db_decommission import AgenticFileProcessor
 from concrete.source_type_classifier import SourceTypeClassifier, SourceType
-from concrete.contextual_rules_engine import ContextualRulesEngine, FileProcessingResult
 
 
 def log_file_diff(file_path: str, original_content: str, modified_content: str):
@@ -294,8 +290,8 @@ class TestAgenticRefactoring:
             test_data_generator.generate_postgres_air_config_file()
         ]
         
-        print(f"📦 Batch size: 3 files")
-        print(f"💰 Cost optimization: 3 files = 1 API call (vs 3 separate calls)")
+        print("📦 Batch size: 3 files")
+        print("💰 Cost optimization: 3 files = 1 API call (vs 3 separate calls)")
         
         # Mock successful responses for each file in JSON format
         batch_json_response = {}

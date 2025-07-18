@@ -34,10 +34,10 @@ def log_file_diff(file_path: str, original_content: str, modified_content: str):
             removals = sum(1 for line in lines if line.startswith('-') and not line.startswith('---'))
             
             # Dark theme header with file path
-            print(f"\n\033[1;36m═══════════════════════════════════════════════════════════════\033[0m")
+            print("\n\033[1;36m═══════════════════════════════════════════════════════════════\033[0m")
             print(f"\033[1;33m📝 DIFF: {file_path}\033[0m")
             print(f"\033[1;32m+{additions} additions\033[0m \033[1;31m-{removals} removals\033[0m")
-            print(f"\033[1;36m═══════════════════════════════════════════════════════════════\033[0m")
+            print("\033[1;36m═══════════════════════════════════════════════════════════════\033[0m")
             
             for i, line in enumerate(lines):
                 if line.startswith('---'):
@@ -61,7 +61,7 @@ def log_file_diff(file_path: str, original_content: str, modified_content: str):
                     # Context lines (unchanged) - dim white for dark theme
                     print(f"\033[0;37m {line}\033[0m")
             
-            print(f"\033[1;36m═══════════════════════════════════════════════════════════════\033[0m")
+            print("\033[1;36m═══════════════════════════════════════════════════════════════\033[0m")
             print()
 
 class TestFileDecommissionProcessor:

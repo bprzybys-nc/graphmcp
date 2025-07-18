@@ -5,9 +5,8 @@ This module provides intelligent pattern discovery to replace the hardcoded
 file discovery in the discover_helm_patterns_step function.
 """
 
-import asyncio
 import re
-from typing import Dict, List, Any, Optional, Tuple
+from typing import Dict, List, Any
 from pathlib import Path
 import logging
 

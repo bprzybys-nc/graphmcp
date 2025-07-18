@@ -5,7 +5,6 @@ This test validates all PRP requirements have been implemented correctly.
 """
 
 import sys
-import os
 import asyncio
 import time
 from pathlib import Path
@@ -19,7 +18,7 @@ async def validate_prp_requirements():
     print("=" * 70)
     
     # Import required modules
-    from workflows.builder import WorkflowBuilder, WorkflowStep, StepType
+    from workflows.builder import WorkflowBuilder, StepType
     from concrete.db_decommission.utils import (
         DatabaseDecommissionWorkflowBuilder, 
         create_db_decommission_workflow,

@@ -10,7 +10,7 @@ import logging
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 from utils import ensure_serializable
-from .base import BaseMCPClient, MCPToolError
+from .base import BaseMCPClient
 
 logger = logging.getLogger(__name__)
 

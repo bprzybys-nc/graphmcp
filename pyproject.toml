@@ -7,7 +7,7 @@ name = "graphmcp"
 version = "0.0.1"
 description = "Core utilities and clients for the Model Context Protocol (MCP)"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.12"
 license = {text = "MIT"}
 authors = [
     {name = "Blazej Przybyszewski", email = "blazej.przybyszewski@gmail.com"}

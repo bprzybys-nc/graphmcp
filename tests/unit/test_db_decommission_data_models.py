@@ -9,10 +9,7 @@ Tests the data models module with:
 """
 
 import pytest
-import json
 import pickle
-from datetime import datetime
-from typing import Dict, List, Any, Optional
 
 from concrete.db_decommission.data_models import (
     FileProcessingResult,

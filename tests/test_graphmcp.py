@@ -124,7 +124,6 @@ def test_data_models():
     
     try:
         import pickle
-        import time
         
         from workbench.graphmcp import (
             GitHubSearchResult,

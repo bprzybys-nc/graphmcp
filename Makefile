@@ -12,7 +12,7 @@
 .DEFAULT_GOAL := help
 
 # Configuration
-PYTHON_VERSION := 3.11
+PYTHON_VERSION := 3.12
 UV_VERSION := 0.4.29
 PROJECT_NAME := graphmcp
 VENV_PATH := .venv

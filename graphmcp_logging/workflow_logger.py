@@ -6,9 +6,7 @@ and EnhancedDemoLogger with backward compatibility and structured JSON output.
 """
 
 import time
-import json
-from typing import Dict, List, Any, Optional, Union
-from pathlib import Path
+from typing import Dict, List, Any, Optional
 
 from .structured_logger import StructuredLogger
 from .data_models import LogEntry, StructuredData, ProgressEntry, DiffData

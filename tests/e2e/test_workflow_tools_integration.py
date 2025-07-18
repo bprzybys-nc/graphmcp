@@ -7,7 +7,6 @@ Tests the specific methods called in the workflow with the working pattern from 
 import pytest
 import asyncio
 import os
-import time
 from pathlib import Path
 
 from clients import GitHubMCPClient, SlackMCPClient, RepomixMCPClient, FilesystemMCPClient, Context7MCPClient
@@ -48,12 +47,12 @@ class TestWorkflowToolsIntegration:
                         pytest.skip("Test channel not accessible, but Slack client is working")
                     
                 assert "ts" in result or "message" in result or result.get("ok", False)
-                print(f"✅ Slack message posted successfully")
+                print("✅ Slack message posted successfully")
                 
                 # Test second pattern from workflow
                 completion_message = "✅ Batch 1 complete: 3/3 files processed in 2.1s"
                 result2 = await slack_client.post_message(test_channel, completion_message)
-                print(f"✅ Slack completion message posted successfully")
+                print("✅ Slack completion message posted successfully")
                 
                 return result
 
@@ -84,7 +83,7 @@ class TestWorkflowToolsIntegration:
                 # The workflow expects these fields to exist
                 if "error" not in result:
                     # Success case - check expected structure
-                    print(f"✅ GitHub repo structure analyzed successfully")
+                    print("✅ GitHub repo structure analyzed successfully")
                     print(f"Repository URL: {result.get('repository_url', 'N/A')}")
                     print(f"Files found: {result.get('total_files', 0)}")
                     
@@ -121,7 +120,7 @@ class TestWorkflowToolsIntegration:
                     assert "error" in result  # Validate error format
                 else:
                     # Success case
-                    print(f"✅ Repomix packed repository successfully")
+                    print("✅ Repomix packed repository successfully")
                     packed_count = result.get("packed_files_count", 0)
                     print(f"Files packed: {packed_count}")
                     
@@ -149,21 +148,21 @@ class TestWorkflowToolsIntegration:
                 # Test write capability (needed for workflow file operations)
                 write_success = await filesystem_client.write_file(str(test_file), validation_content)
                 assert write_success is True, "Workflow needs write capability"
-                print(f"✅ Filesystem write validation passed")
+                print("✅ Filesystem write validation passed")
                 
                 # Test read capability (needed for workflow validation)
                 read_content = await filesystem_client.read_file(str(test_file))
                 assert read_content == validation_content, "Workflow needs reliable read capability"
-                print(f"✅ Filesystem read validation passed")
+                print("✅ Filesystem read validation passed")
                 
                 # Test directory listing (used in validation functions)
                 files = await filesystem_client.list_directory(".")
                 assert test_file.name in files, "Workflow needs directory listing capability"
-                print(f"✅ Filesystem directory listing validation passed")
+                print("✅ Filesystem directory listing validation passed")
                 
                 # Verify the working pattern is functioning
                 assert test_file.exists(), "Working pattern should create actual files"
-                print(f"✅ Working pattern validated - file exists on filesystem")
+                print("✅ Working pattern validated - file exists on filesystem")
 
             finally:
                 await filesystem_client.close()
@@ -188,7 +187,7 @@ class TestWorkflowToolsIntegration:
                 # Test health check
                 health = await context7_client.health_check()
                 assert health is True, "Health check should pass"
-                print(f"✅ Context7 health check passed")
+                print("✅ Context7 health check passed")
                 
                 # Test resolve library ID (basic functionality test)
                 try:
@@ -223,7 +222,7 @@ class TestWorkflowToolsIntegration:
                 assert filesystem_client.SERVER_NAME == "ovr_filesystem"
                 assert context7_client.SERVER_NAME == "ovr_context7"
                 assert github_client.SERVER_NAME == "ovr_github"
-                print(f"✅ All 4 core workflow MCP clients initialized successfully (Slack skipped - awaiting approval)")
+                print("✅ All 4 core workflow MCP clients initialized successfully (Slack skipped - awaiting approval)")
                 
                 # Test basic connectivity pattern (without external dependencies)
                 test_file = Path("test_coordination.txt")
@@ -231,7 +230,7 @@ class TestWorkflowToolsIntegration:
                 
                 coordination_data = await filesystem_client.read_file(str(test_file))
                 assert coordination_data == "coordination test"
-                print(f"✅ Basic tool coordination validated")
+                print("✅ Basic tool coordination validated")
                 
                 # Clean up
                 if test_file.exists():

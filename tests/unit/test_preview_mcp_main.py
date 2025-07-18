@@ -9,8 +9,6 @@ Tests the main entry point functionality for the MCP server:
 """
 
 import pytest
-import asyncio
-import sys
 from unittest.mock import MagicMock, patch, AsyncMock
 import logging
 

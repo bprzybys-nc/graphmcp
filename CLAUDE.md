@@ -32,7 +32,11 @@ GraphMCP is a sophisticated workflow orchestration framework that coordinates mu
 
 ## Development Environment Setup
 
-### Prerequisites & Quick Start
+### Prerequisites
+- Python 3.12 or higher (required)
+- uv package manager (automatically installed by make setup)
+
+### Quick Start
 ```bash
 # Setup development environment
 make setup                      # Install dependencies and setup environment

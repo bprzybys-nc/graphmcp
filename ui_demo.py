@@ -155,7 +155,7 @@ def main():
                 print(f"   📄 Files Discovered: {result.get('total_files_processed', 0)}")
                 print(f"   ✏️  Files Modified: {result.get('total_files_modified', 0)}")
                 print(f"   ⏱️  Total Duration: {result.get('duration', 0):.1f} seconds")
-                print(f"   ✅ Success Rate: 100%")
+                print("   ✅ Success Rate: 100%")
         
         print("\n🎉 UI DEMO IS NOW RUNNING!")
         print("──────────────────────────────────────────────────────────────────────────────")

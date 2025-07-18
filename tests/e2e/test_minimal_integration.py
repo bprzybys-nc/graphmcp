@@ -7,7 +7,6 @@ to ensure basic functionality works before running complex e2e tests.
 
 import pytest
 import os
-import asyncio
 from dotenv import load_dotenv
 
 # Load environment variables

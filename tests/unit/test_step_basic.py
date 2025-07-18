@@ -13,7 +13,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 # Test basic WorkflowStep and WorkflowBuilder functionality
 from dataclasses import dataclass, field
 from enum import Enum, auto
-from typing import Any, Callable, Union
+from typing import Any, Callable
 
 # Mock ensure_serializable to avoid circular import
 def ensure_serializable(obj):

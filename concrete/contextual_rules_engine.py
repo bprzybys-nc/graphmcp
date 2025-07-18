@@ -5,10 +5,8 @@ This module provides intelligent rule application based on source type classific
 and detected frameworks, ensuring appropriate rules are applied to each file type.
 """
 
-import asyncio
 import re
-from typing import Dict, List, Any, Optional, Set, Tuple
-from pathlib import Path
+from typing import Dict, List, Any, Optional, Tuple
 from dataclasses import dataclass
 import logging
 

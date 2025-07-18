@@ -34,7 +34,6 @@ class DemoCache:
         self.cache_dir.mkdir(parents=True, exist_ok=True)
         
         # Initialize AsyncCache for performance optimization
-        from concrete.performance_optimization import AsyncCache
         from utils.performance_optimization import CacheStrategy
         self.async_cache = AsyncCache(
             strategy=CacheStrategy.DISK,
