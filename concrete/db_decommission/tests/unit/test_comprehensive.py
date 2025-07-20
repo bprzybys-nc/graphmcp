@@ -20,7 +20,7 @@ async def validate_prp_requirements():
 
     # Import required modules
     from workflows.builder import WorkflowBuilder, StepType
-    from concrete.db_decommission.utils import (
+    from ...utils import (
         DatabaseDecommissionWorkflowBuilder,
         create_db_decommission_workflow,
         extract_repo_details,

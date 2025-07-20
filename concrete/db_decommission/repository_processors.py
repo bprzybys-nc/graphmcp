@@ -435,6 +435,7 @@ async def initialize_repomix_client(context: Any, logger: Any) -> Optional[Any]:
             logger.log_info("Repomix client already initialized")
             return repomix_client
 
+        from clients.repomix import RepomixMCPClient
         repomix_client = RepomixMCPClient(context.config.config_path)
         context._clients["ovr_repomix"] = repomix_client
         logger.log_info("Repomix client initialized successfully")

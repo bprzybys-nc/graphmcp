@@ -8,8 +8,7 @@ to maintain the 500-line limit per module.
 import asyncio
 from typing import Any, Dict, List, Optional, Tuple
 
-# Import MCP clients
-from clients import GitHubMCPClient, SlackMCPClient, RepomixMCPClient
+# MCP clients imported inside functions to avoid circular imports
 
 # Import new structured logging
 
@@ -27,6 +26,7 @@ async def initialize_github_client(context: Any, logger: Any) -> Optional[Any]:
     """
     try:
         logger.log_info("Initializing GitHub MCP client...")
+        from clients.github import GitHubMCPClient
         github_client = GitHubMCPClient(config_path="mcp_config.json")
 
         # Test connection
@@ -56,6 +56,7 @@ async def initialize_slack_client(context: Any, logger: Any) -> Optional[Any]:
     """
     try:
         logger.log_info("Initializing Slack MCP client...")
+        from clients.slack import SlackMCPClient
         slack_client = SlackMCPClient()
 
         # Test connection
@@ -85,6 +86,7 @@ async def initialize_repomix_client(context: Any, logger: Any) -> Optional[Any]:
     """
     try:
         logger.log_info("Initializing Repomix MCP client...")
+        from clients.repomix import RepomixMCPClient
         repomix_client = RepomixMCPClient()
 
         # Test connection

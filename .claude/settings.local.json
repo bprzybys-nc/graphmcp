@@ -153,7 +153,8 @@
       "mcp__jetbrains__list_directory_tree_in_folder",
       "mcp__jetbrains__get_file_text_by_path",
       "mcp__jetbrains__search_in_files_content",
-      "mcp__jetbrains__list_files_in_folder"
+      "mcp__jetbrains__list_files_in_folder",
+      "Bash(.venv/bin/pytest concrete/db_decommission/tests/unit/ -v)"
     ],
     "deny": [
       "Bash(rm -rf /:*)",

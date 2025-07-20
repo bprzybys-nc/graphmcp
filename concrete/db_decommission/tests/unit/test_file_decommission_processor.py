@@ -6,7 +6,7 @@ import pytest
 import tempfile
 import subprocess
 from pathlib import Path
-from utils.file_processor import FileDecommissionProcessor
+from ...file_processor import FileDecommissionProcessor
 
 
 def log_file_diff(file_path: str, original_content: str, modified_content: str):

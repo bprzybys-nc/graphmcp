@@ -154,7 +154,7 @@ def test_extract_repo_details():
     """Test extract_repo_details helper function."""
     print("Testing extract_repo_details...")
 
-    from concrete.db_decommission.utils import extract_repo_details
+    from ...utils import extract_repo_details
 
     # Test standard GitHub URL
     owner, name = extract_repo_details("https://github.com/microsoft/typescript")
