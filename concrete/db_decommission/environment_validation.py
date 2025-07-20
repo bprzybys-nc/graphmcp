@@ -10,8 +10,8 @@ from typing import Any, Dict, List
 
 # Import components for validation
 from utils.parameter_service import get_parameter_service
-from utils.entity_reference_extractor import DatabaseReferenceExtractor
-from utils.file_processor import FileDecommissionProcessor
+from .entity_reference_extractor import DatabaseReferenceExtractor
+from .file_processor import FileDecommissionProcessor
 from utils.source_type_classifier import SourceTypeClassifier
 from utils.monitoring import get_monitoring_system, HealthStatus
 

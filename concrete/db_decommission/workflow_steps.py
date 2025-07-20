@@ -9,7 +9,7 @@ import time
 from typing import Any, Dict, Optional
 
 # Import PRP-compliant components
-from utils.file_processor import FileDecommissionProcessor
+from .file_processor import FileDecommissionProcessor
 
 # Import new structured logging
 from graphmcp_logging import get_logger

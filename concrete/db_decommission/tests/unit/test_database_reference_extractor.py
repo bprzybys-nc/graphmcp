@@ -6,7 +6,7 @@ import pytest
 import tempfile
 import os
 from pathlib import Path
-from utils.entity_reference_extractor import DatabaseReferenceExtractor, MatchedFile
+from ...entity_reference_extractor import DatabaseReferenceExtractor, MatchedFile
 
 
 class TestDatabaseReferenceExtractor:

@@ -16,7 +16,7 @@ async def mock_workflow_execution_test():
     """Integration test for complete workflow creation and execution."""
     print("Testing complete workflow creation and execution...")
 
-    from concrete.db_decommission.utils import DatabaseDecommissionWorkflowBuilder
+    from ...utils import DatabaseDecommissionWorkflowBuilder
 
     # Test 1: Create workflow with step_auto
     async def validation_step(context, step, **params):
@@ -78,7 +78,7 @@ async def test_backward_compatibility():
     """Test that existing code patterns still work."""
     print("Testing backward compatibility...")
 
-    from concrete.db_decommission.utils import create_db_decommission_workflow
+    from ...utils import create_db_decommission_workflow
 
     # Test 1: Old function signature still works
     workflow = create_db_decommission_workflow("compatibility_test_db")
@@ -108,7 +108,7 @@ async def test_fluent_interface_patterns():
     """Test fluent interface patterns work correctly."""
     print("Testing fluent interface patterns...")
 
-    from concrete.db_decommission.utils import DatabaseDecommissionWorkflowBuilder
+    from ...utils import DatabaseDecommissionWorkflowBuilder
 
     # Test method chaining with all builder methods
     builder = (
@@ -157,7 +157,7 @@ async def test_parameter_management():
     """Test parameter management and centralization."""
     print("Testing parameter management...")
 
-    from concrete.db_decommission.utils import DatabaseDecommissionWorkflowBuilder
+    from ...utils import DatabaseDecommissionWorkflowBuilder
 
     builder = (
         DatabaseDecommissionWorkflowBuilder("param_test_db")

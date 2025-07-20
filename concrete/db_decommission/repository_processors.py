@@ -9,11 +9,10 @@ import time
 from typing import Any, Dict, List, Optional, Tuple
 from pathlib import Path
 
-# Import MCP clients
-from clients import SlackMCPClient, RepomixMCPClient
+# MCP clients imported inside functions to avoid circular imports
 
 # Import PRP-compliant components
-from utils.entity_reference_extractor import DatabaseReferenceExtractor
+from .entity_reference_extractor import DatabaseReferenceExtractor
 from utils.source_type_classifier import SourceTypeClassifier
 from utils.performance_optimization import get_performance_manager
 
@@ -408,6 +407,7 @@ async def initialize_slack_client(context: Any, logger: Any) -> Optional[Any]:
             logger.log_info("Slack client already initialized")
             return slack_client
 
+        from clients.slack import SlackMCPClient
         slack_client = SlackMCPClient(context.config.config_path)
         context._clients["ovr_slack"] = slack_client
         logger.log_info("Slack client initialized successfully")

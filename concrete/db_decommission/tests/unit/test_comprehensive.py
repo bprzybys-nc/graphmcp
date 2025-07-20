@@ -253,7 +253,7 @@ async def validate_performance_requirements():
     print("✅ Code reduction: step_auto() eliminates lambda boilerplate")
 
     # Test fluent interface reduces builder instantiation
-    from concrete.db_decommission.utils import DatabaseDecommissionWorkflowBuilder
+    from ...utils import DatabaseDecommissionWorkflowBuilder
 
     # New fluent interface allows method chaining
     fluent_workflow = (

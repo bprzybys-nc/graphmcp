@@ -62,7 +62,7 @@ def test_database_workflow_builder():
     print("Testing DatabaseDecommissionWorkflowBuilder...")
 
     # Direct import to avoid circular dependencies
-    from concrete.db_decommission.utils import DatabaseDecommissionWorkflowBuilder
+    from ...utils import DatabaseDecommissionWorkflowBuilder
 
     # Test 1: Basic initialization
     builder = DatabaseDecommissionWorkflowBuilder("test_database")
@@ -119,7 +119,7 @@ def test_create_db_decommission_workflow():
     """Test create_db_decommission_workflow function."""
     print("Testing create_db_decommission_workflow...")
 
-    from concrete.db_decommission.utils import (
+    from ...utils import (
         create_db_decommission_workflow,
         DatabaseDecommissionWorkflowBuilder,
     )
